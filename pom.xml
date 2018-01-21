@@ -30,7 +30,6 @@
 
   <artifactId>org.apache.sling.commons.messaging.mail</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>bundle</packaging>
 
   <name>Apache Sling Commons Messaging Mail</name>
   <description>Messaging service using Commons Email to send mails.</description>
@@ -51,16 +50,16 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <_dsannotations>*</_dsannotations>
-            <_metatypeannotations>*</_metatypeannotations>
-          </instructions>
-        </configuration>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-maven-plugin</artifactId>
       </plugin>
+      <!-- enable baseline after initial release -->
+      <!--
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-baseline-maven-plugin</artifactId>
+      </plugin>
+      -->
       <plugin>
         <groupId>org.apache.servicemix.tooling</groupId>
         <artifactId>depends-maven-plugin</artifactId>
