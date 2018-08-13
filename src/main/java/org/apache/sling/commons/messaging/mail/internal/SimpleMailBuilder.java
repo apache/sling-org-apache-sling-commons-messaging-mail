@@ -21,12 +21,11 @@ package org.apache.sling.commons.messaging.mail.internal;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.sling.commons.messaging.mail.MailBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -85,7 +84,7 @@ public class SimpleMailBuilder implements MailBuilder {
     }
 
     @Override
-    public Email build(@Nonnull final String message, @Nonnull final String recipient, @Nonnull final Map data) throws EmailException {
+    public Email build(@NotNull final String message, @NotNull final String recipient, @NotNull final Map data) throws EmailException {
         final Map configuration = (Map) data.getOrDefault("mail", Collections.EMPTY_MAP);
         final String subject = (String) configuration.getOrDefault(SUBJECT_KEY, this.configuration.subject());
         final String from = (String) configuration.getOrDefault(FROM_KEY, this.configuration.from());

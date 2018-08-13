@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-import javax.annotation.Nonnull;
 import javax.mail.MessagingException;
 
 import org.apache.commons.mail.Email;
@@ -36,6 +35,7 @@ import org.apache.sling.commons.messaging.mail.MailResult;
 import org.apache.sling.commons.messaging.mail.MailUtil;
 import org.apache.sling.commons.threads.ThreadPool;
 import org.apache.sling.commons.threads.ThreadPoolManager;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -108,12 +108,12 @@ public class SimpleMailService implements MessageService {
     }
 
     @Override
-    public CompletableFuture<Result> send(@Nonnull final String message, @Nonnull final String recipient) {
+    public CompletableFuture<Result> send(@NotNull final String message, @NotNull final String recipient) {
         return send(message, recipient, Collections.emptyMap());
     }
 
     @Override
-    public CompletableFuture<Result> send(@Nonnull final String message, @Nonnull final String recipient, @Nonnull final Map data) {
+    public CompletableFuture<Result> send(@NotNull final String message, @NotNull final String recipient, @NotNull final Map data) {
         return CompletableFuture.supplyAsync(() -> sendMail(message, recipient, data, mailBuilder), runnable -> threadPool.submit(runnable));
     }
 

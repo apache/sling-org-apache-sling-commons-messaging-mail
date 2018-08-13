@@ -20,15 +20,14 @@ package org.apache.sling.commons.messaging.mail;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
 public interface MailBuilder {
 
-    Email build(@Nonnull final String message, @Nonnull final String recipient, @Nonnull final Map data) throws EmailException;
+    Email build(@NotNull final String message, @NotNull final String recipient, @NotNull final Map data) throws EmailException;
 
 }
