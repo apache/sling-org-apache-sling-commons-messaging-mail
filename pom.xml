@@ -23,8 +23,8 @@
 
   <parent>
     <groupId>org.apache.sling</groupId>
-    <artifactId>sling</artifactId>
-    <version>34</version>
+    <artifactId>sling-bundle-parent</artifactId>
+    <version>35</version>
     <relativePath/>
   </parent>
 
@@ -51,15 +51,11 @@
     <plugins>
       <plugin>
         <groupId>biz.aQute.bnd</groupId>
-        <artifactId>bnd-maven-plugin</artifactId>
-      </plugin>
-      <!-- enable baseline after initial release -->
-      <!--
-      <plugin>
-        <groupId>biz.aQute.bnd</groupId>
         <artifactId>bnd-baseline-maven-plugin</artifactId>
+        <configuration>
+          <failOnMissing>false</failOnMissing>
+        </configuration>
       </plugin>
-      -->
       <plugin>
         <groupId>org.apache.servicemix.tooling</groupId>
         <artifactId>depends-maven-plugin</artifactId>
