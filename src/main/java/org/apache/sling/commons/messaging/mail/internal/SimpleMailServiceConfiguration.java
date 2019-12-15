@@ -19,18 +19,80 @@
 package org.apache.sling.commons.messaging.mail.internal;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(
     name = "Apache Sling Commons Messaging Mail “Simple Mail Service”",
-    description = "simple mail service for Sling Commons Messaging"
+    description = "Simple mail service sending MIME messages via SMTPS"
 )
 @interface SimpleMailServiceConfiguration {
+
+    @AttributeDefinition(
+        name = "Names",
+        description = "names of this service",
+        required = false
+    )
+    String[] names() default {"default"};
 
     @AttributeDefinition(
         name = "ThreadPool name",
         description = "name of the ThreadPool to use for sending mails"
     )
-    String threadpoolName() default "default";
+    String threadpool_name() default "default";
+
+    @AttributeDefinition(
+        name = "SMTP from",
+        description = "from address"
+    )
+    String mail_smtps_from();
+
+    @AttributeDefinition(
+        name = "SMTP host",
+        description = "host of SMTP server"
+    )
+    String mail_smtps_host() default "localhost";
+
+    @AttributeDefinition(
+        name = "SMTP port",
+        description = "port of SMTP server"
+    )
+    int mail_smtps_port() default 465;
+
+    @AttributeDefinition(
+        name = "Username",
+        description = "username for SMTP server"
+    )
+    String username();
+
+    @AttributeDefinition(
+        name = "Password",
+        description = "password for SMTP server",
+        type = AttributeType.PASSWORD
+    )
+    String password();
+
+    @AttributeDefinition(
+        name = "Message ID Provider target",
+        description = "filter expression to target a Message ID Provider",
+        required = false
+    )
+    String messageIdProvider_target();
+
+    @AttributeDefinition(
+        name = "Crypto Service target",
+        description = "filter expression to target a Crypto Service",
+        required = false
+    )
+    String cryptoService_target();
+
+    @AttributeDefinition(
+        name = "Transport Listeners target",
+        description = "filter expression to target Transport Listeners",
+        required = false
+    )
+    String transportListeners_target();
+
+    String webconsole_configurationFactory_nameHint() default "{names} {username}@{mail_smtps_host}:{mail_smtps_port}";
 
 }

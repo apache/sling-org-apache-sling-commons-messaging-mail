@@ -18,21 +18,23 @@
  */
 package org.apache.sling.commons.messaging.mail.internal;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.event.TransportListener;
+import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.commons.crypto.CryptoService;
 import org.apache.sling.commons.messaging.MessageService;
-import org.apache.sling.commons.messaging.Result;
-import org.apache.sling.commons.messaging.mail.MailBuilder;
-import org.apache.sling.commons.messaging.mail.MailResult;
-import org.apache.sling.commons.messaging.mail.MailUtil;
+import org.apache.sling.commons.messaging.mail.MailService;
+import org.apache.sling.commons.messaging.mail.MessageBuilder;
+import org.apache.sling.commons.messaging.mail.MessageIdProvider;
 import org.apache.sling.commons.threads.ThreadPool;
 import org.apache.sling.commons.threads.ThreadPoolManager;
 import org.jetbrains.annotations.NotNull;
@@ -50,23 +52,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component(
-    service = MessageService.class,
+    service = {
+        MessageService.class,
+        MailService.class
+    },
     property = {
-        Constants.SERVICE_DESCRIPTION + "=Service to send messages by mail.",
-        Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
+        Constants.SERVICE_DESCRIPTION + "=Apache Sling Commons Messaging Mail – Simple Mail Service",
+        Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
+        "protocol=SMTPS"
     }
 )
 @Designate(
-    ocd = SimpleMailServiceConfiguration.class
+    ocd = SimpleMailServiceConfiguration.class,
+    factory = true
 )
-public class SimpleMailService implements MessageService {
+public class SimpleMailService implements MailService {
 
     @Reference(
-        cardinality = ReferenceCardinality.MANDATORY,
+        cardinality = ReferenceCardinality.OPTIONAL,
         policy = ReferencePolicy.DYNAMIC,
         policyOption = ReferencePolicyOption.GREEDY
     )
-    private volatile MailBuilder mailBuilder;
+    private volatile MessageIdProvider messageIdProvider;
 
     @Reference(
         cardinality = ReferenceCardinality.MANDATORY,
@@ -75,8 +82,33 @@ public class SimpleMailService implements MessageService {
     )
     private volatile ThreadPoolManager threadPoolManager;
 
-    // the ThreadPool used for sending mails
+    @Reference(
+        cardinality = ReferenceCardinality.MANDATORY,
+        policy = ReferencePolicy.DYNAMIC,
+        policyOption = ReferencePolicyOption.GREEDY
+    )
+    private volatile CryptoService cryptoService;
+
+    @Reference(
+        cardinality = ReferenceCardinality.MULTIPLE,
+        policy = ReferencePolicy.DYNAMIC,
+        policyOption = ReferencePolicyOption.GREEDY
+    )
+    private volatile List<TransportListener> transportListeners;
+
     private ThreadPool threadPool;
+
+    private SimpleMailServiceConfiguration configuration;
+
+    private Session session;
+
+    private static final String SMTPS_PROTOCOL = "smtps";
+
+    // https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html
+
+    private static final String MAIL_SMTPS_FROM = "mail.smtps.from";
+
+    private static final String MESSAGE_ID_HEADER = "Message-ID";
 
     private final Logger logger = LoggerFactory.getLogger(SimpleMailService.class);
 
@@ -85,46 +117,72 @@ public class SimpleMailService implements MessageService {
 
     @Activate
     private void activate(final SimpleMailServiceConfiguration configuration) {
-        logger.debug("activate");
+        logger.debug("activating");
+        this.configuration = configuration;
         configure(configuration);
     }
 
     @Modified
     private void modified(final SimpleMailServiceConfiguration configuration) {
-        logger.debug("modified");
+        logger.debug("modifying");
+        this.configuration = configuration;
         configure(configuration);
     }
 
     @Deactivate
-    protected void deactivate() {
-        logger.info("deactivate");
+    private void deactivate() {
+        logger.debug("deactivating");
+        this.configuration = null;
         threadPoolManager.release(threadPool);
         threadPool = null;
+        session = null;
     }
 
     private void configure(final SimpleMailServiceConfiguration configuration) {
         threadPoolManager.release(threadPool);
-        threadPool = threadPoolManager.get(configuration.threadpoolName());
+        threadPool = threadPoolManager.get(configuration.threadpool_name());
+
+        final Properties properties = new Properties();
+        final String from = configuration.mail_smtps_from();
+        if (StringUtils.isNotBlank(from)) {
+            properties.setProperty(MAIL_SMTPS_FROM, from);
+        }
+
+        session = Session.getInstance(properties);
     }
 
     @Override
-    public CompletableFuture<Result> send(@NotNull final String message, @NotNull final String recipient) {
-        return send(message, recipient, Collections.emptyMap());
+    public @NotNull MessageBuilder getMessageBuilder() {
+        return new SimpleMessageBuilder(session);
     }
 
     @Override
-    public CompletableFuture<Result> send(@NotNull final String message, @NotNull final String recipient, @NotNull final Map data) {
-        return CompletableFuture.supplyAsync(() -> sendMail(message, recipient, data, mailBuilder), runnable -> threadPool.submit(runnable));
+    public @NotNull CompletableFuture<MimeMessage> sendMessage(@NotNull final MimeMessage message) {
+        return CompletableFuture.supplyAsync(() -> send(message), runnable -> threadPool.submit(runnable));
     }
 
-    private MailResult sendMail(final String message, final String recipient, final Map data, final MailBuilder mailBuilder) {
+    private @NotNull MimeMessage send(@NotNull final MimeMessage message) {
         try {
-            final Email email = mailBuilder.build(message, recipient, data);
-            final String messageId = email.send();
-            logger.info("mail '{}' sent", messageId);
-            final byte[] bytes = MailUtil.toByteArray(email);
-            return new MailResult(bytes);
-        } catch (EmailException | MessagingException | IOException e) {
+            final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+            Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+            final String password = cryptoService.decrypt(configuration.password());
+            try (final Transport transport = session.getTransport(SMTPS_PROTOCOL)) {
+                final List<TransportListener> listeners = this.transportListeners;
+                listeners.forEach(transport::addTransportListener);
+                transport.connect(configuration.mail_smtps_host(), configuration.mail_smtps_port(), configuration.username(), password);
+                message.saveChanges();
+                final MessageIdProvider messageIdProvider = this.messageIdProvider;
+                if (messageIdProvider != null) {
+                    final String messageId = messageIdProvider.getMessageId(message);
+                    message.setHeader(MESSAGE_ID_HEADER, String.format("<%s>", messageId));
+                }
+                logger.debug("sending message '{}'", message.getMessageID());
+                transport.sendMessage(message, message.getAllRecipients());
+                return message;
+            } finally {
+                Thread.currentThread().setContextClassLoader(tccl);
+            }
+        } catch (MessagingException e) {
             throw new CompletionException(e);
         }
     }
