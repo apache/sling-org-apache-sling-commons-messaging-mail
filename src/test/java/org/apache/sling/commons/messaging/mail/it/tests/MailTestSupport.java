@@ -31,6 +31,7 @@ import org.apache.sling.testing.paxexam.SlingOptions;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.options.MavenArtifactProvisionOption;
 import org.ops4j.pax.exam.options.ModifiableCompositeOption;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.TemplateEngine;
@@ -49,6 +50,9 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 
 public abstract class MailTestSupport extends TestSupport {
+
+    @Inject
+    protected BundleContext bundleContext;
 
     @Inject
     protected ConfigurationAdmin configurationAdmin;

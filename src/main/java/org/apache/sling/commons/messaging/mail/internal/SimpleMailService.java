@@ -26,6 +26,7 @@ import java.util.concurrent.CompletionException;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.event.ConnectionListener;
 import javax.mail.event.TransportListener;
 import javax.mail.internet.MimeMessage;
 
@@ -88,6 +89,13 @@ public class SimpleMailService implements MailService {
         policyOption = ReferencePolicyOption.GREEDY
     )
     private volatile CryptoService cryptoService;
+
+    @Reference(
+        cardinality = ReferenceCardinality.MULTIPLE,
+        policy = ReferencePolicy.DYNAMIC,
+        policyOption = ReferencePolicyOption.GREEDY
+    )
+    private volatile List<ConnectionListener> connectionListeners;
 
     @Reference(
         cardinality = ReferenceCardinality.MULTIPLE,
@@ -167,8 +175,10 @@ public class SimpleMailService implements MailService {
             Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
             final String password = cryptoService.decrypt(configuration.password());
             try (final Transport transport = session.getTransport(SMTPS_PROTOCOL)) {
-                final List<TransportListener> listeners = this.transportListeners;
-                listeners.forEach(transport::addTransportListener);
+                final List<ConnectionListener> connectionListeners = this.connectionListeners;
+                connectionListeners.forEach(transport::addConnectionListener);
+                final List<TransportListener> transportListeners = this.transportListeners;
+                transportListeners.forEach(transport::addTransportListener);
                 transport.connect(configuration.mail_smtps_host(), configuration.mail_smtps_port(), configuration.username(), password);
                 message.saveChanges();
                 final MessageIdProvider messageIdProvider = this.messageIdProvider;

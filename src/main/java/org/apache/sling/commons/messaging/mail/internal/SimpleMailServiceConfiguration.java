@@ -87,6 +87,13 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     String cryptoService_target();
 
     @AttributeDefinition(
+        name = "Connection Listeners target",
+        description = "filter expression to target Connection Listeners",
+        required = false
+    )
+    String connectionListeners_target();
+
+    @AttributeDefinition(
         name = "Transport Listeners target",
         description = "filter expression to target Transport Listeners",
         required = false
