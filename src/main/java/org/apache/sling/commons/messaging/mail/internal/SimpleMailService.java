@@ -165,11 +165,11 @@ public class SimpleMailService implements MailService {
     }
 
     @Override
-    public @NotNull CompletableFuture<MimeMessage> sendMessage(@NotNull final MimeMessage message) {
-        return CompletableFuture.supplyAsync(() -> send(message), runnable -> threadPool.submit(runnable));
+    public @NotNull CompletableFuture<Void> sendMessage(@NotNull final MimeMessage message) {
+        return CompletableFuture.runAsync(() -> send(message), runnable -> threadPool.submit(runnable));
     }
 
-    private @NotNull MimeMessage send(@NotNull final MimeMessage message) {
+    private void send(@NotNull final MimeMessage message) {
         try {
             final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
@@ -188,7 +188,6 @@ public class SimpleMailService implements MailService {
                 }
                 logger.debug("sending message '{}'", message.getMessageID());
                 transport.sendMessage(message, message.getAllRecipients());
-                return message;
             } finally {
                 Thread.currentThread().setContextClassLoader(tccl);
             }

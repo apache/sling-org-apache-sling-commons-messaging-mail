@@ -27,10 +27,10 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
-public interface MailService extends MessageService<MimeMessage> {
+public interface MailService extends MessageService<MimeMessage, Void> {
 
     @NotNull MessageBuilder getMessageBuilder();
 
-    @NotNull CompletableFuture<MimeMessage> sendMessage(@NotNull final MimeMessage message);
+    @NotNull CompletableFuture<Void> sendMessage(@NotNull final MimeMessage message);
 
 }

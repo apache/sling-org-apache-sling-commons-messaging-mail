@@ -106,7 +106,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
     private GreenMail greenMail;
 
     @Inject
-    protected MessageService<MimeMessage> messageService;
+    protected MessageService<MimeMessage, Void> messageService;
 
     @Inject
     @Filter(value = "(protocol=SMTPS)")
@@ -200,7 +200,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
         final Properties properties = new Properties();
         final Session session = Session.getDefaultInstance(properties);
         final MimeMessage message = new MimeMessage(session);
-        final CompletableFuture<MimeMessage> future = messageService.sendMessage(message);
+        final CompletableFuture<Void> future = messageService.sendMessage(message);
         future.get();
     }
 
@@ -219,7 +219,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .text(text)
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -254,7 +254,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .attachment(support, "image/png", "SupportApache-small.png")
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -286,7 +286,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .html(html)
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -320,7 +320,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .attachment(support, "image/png", "SupportApache-small.png")
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -356,7 +356,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .inline(sling, "image/png", "sling")
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -393,7 +393,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .inline(sling, "image/png", "sling")
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         if (local) {
@@ -436,7 +436,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             .text("Testing Connection and Transport Listeners")
             .build();
 
-        final CompletableFuture<MimeMessage> future = mailService.sendMessage(message);
+        final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
         assertThat(unusedCLSR.getReference().getUsingBundles()).isNull();
