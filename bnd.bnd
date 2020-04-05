@@ -1,7 +1,3 @@
-Import-Package:\
-  javax.activation;version=!,\
-  *
-
 -removeheaders:\
   Include-Resource,\
   Private-Package
