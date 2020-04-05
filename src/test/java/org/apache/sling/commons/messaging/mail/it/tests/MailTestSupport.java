@@ -40,7 +40,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.templatemode.TemplateMode;
 
-import static org.apache.sling.testing.paxexam.SlingOptions.backing;
 import static org.apache.sling.testing.paxexam.SlingOptions.scr;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsThreads;
 import static org.ops4j.pax.exam.CoreOptions.bootClasspathLibrary;
@@ -65,13 +64,13 @@ public abstract class MailTestSupport extends TestSupport {
             // Sling Commons Messaging Mail
             testBundle("bundle.filename"),
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.messaging").versionAsInProject(),
+            mavenBundle().groupId("org.apache.servicemix.specs").artifactId("org.apache.servicemix.specs.activation-api-1.1").versionAsInProject(),
             mavenBundle().groupId("jakarta.mail").artifactId("jakarta.mail-api").versionAsInProject(),
             mavenBundle().groupId("com.sun.mail").artifactId("jakarta.mail").versionAsInProject(),
             mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").versionAsInProject(),
             scr(),
             slingCommonsCrypto(),
             slingCommonsThreads(),
-            backing(),
             // testing
             junitBundles(),
             wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject()),
