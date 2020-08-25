@@ -25,6 +25,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     name = "Apache Sling Commons Messaging Mail “Simple Message ID Provider”",
     description = "Service to provide a Message ID based on random UUID, timestamp in ms and custom host"
 )
+@SuppressWarnings("java:S100")
 @interface SimpleMessageIdProviderConfiguration {
 
     @AttributeDefinition(

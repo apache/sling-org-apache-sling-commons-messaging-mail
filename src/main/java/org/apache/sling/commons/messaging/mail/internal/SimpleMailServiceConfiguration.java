@@ -26,6 +26,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     name = "Apache Sling Commons Messaging Mail “Simple Mail Service”",
     description = "Simple mail service sending MIME messages via SMTPS"
 )
+@SuppressWarnings("java:S100")
 @interface SimpleMailServiceConfiguration {
 
     @AttributeDefinition(
