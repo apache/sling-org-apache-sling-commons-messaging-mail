@@ -20,11 +20,7 @@ This module provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4
     MailService mailService;
 
     String subject = "Rudy, A Message to You";
-    String text = "Stop your messing around
-Better think of your future
-Time you straighten right out
-Creating problems in town
-…";
+    String text = "Stop your messing around\nBetter think of your future\nTime you straighten right out\nCreating problems in town\n…";
     String html = […];
     byte[] attachment = […];
     byte[] inline = […];
