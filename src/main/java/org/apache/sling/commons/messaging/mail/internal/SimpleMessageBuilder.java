@@ -331,7 +331,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
         message.setRecipients(Message.RecipientType.TO, to().toArray(new Address[0]));
         message.setRecipients(Message.RecipientType.CC, cc().toArray(new Address[0]));
         message.setRecipients(Message.RecipientType.BCC, bcc().toArray(new Address[0]));
-        message.setReplyTo(replyTos.toArray(new Address[0]));
+        message.setReplyTo(replyTo().toArray(new Address[0]));
         message.setSubject(subject(), StandardCharsets.UTF_8.name());
 
         if (hasHtml() || hasAttachments() || hasInlines()) {
