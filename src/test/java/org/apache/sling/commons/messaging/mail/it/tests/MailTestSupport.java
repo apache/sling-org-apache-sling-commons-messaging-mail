@@ -56,7 +56,7 @@ public abstract class MailTestSupport extends TestSupport {
     @Inject
     protected ConfigurationAdmin configurationAdmin;
 
-    private ITemplateEngine templateEngine = new TemplateEngine();
+    private final ITemplateEngine templateEngine = new TemplateEngine();
 
     protected ModifiableCompositeOption baseConfiguration() {
         return composite(
