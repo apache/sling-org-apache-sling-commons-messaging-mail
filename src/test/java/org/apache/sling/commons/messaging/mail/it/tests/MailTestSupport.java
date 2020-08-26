@@ -46,6 +46,7 @@ import static org.ops4j.pax.exam.CoreOptions.bootClasspathLibrary;
 import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.vmOption;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 
 public abstract class MailTestSupport extends TestSupport {
@@ -80,7 +81,8 @@ public abstract class MailTestSupport extends TestSupport {
             mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
             mavenBundle().groupId("org.apache.commons").artifactId("commons-email").versionAsInProject(),
             greenmail(),
-            thymeleaf()
+            thymeleaf(),
+            vmOption(System.getProperty("jacoco.command"))
         );
     }
 
