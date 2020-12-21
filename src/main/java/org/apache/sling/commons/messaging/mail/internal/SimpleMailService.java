@@ -23,12 +23,12 @@ import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.event.ConnectionListener;
-import javax.mail.event.TransportListener;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.event.ConnectionListener;
+import jakarta.mail.event.TransportListener;
+import jakarta.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.commons.crypto.CryptoService;

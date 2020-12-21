@@ -18,8 +18,8 @@
  */
 package org.apache.sling.commons.messaging.mail;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;

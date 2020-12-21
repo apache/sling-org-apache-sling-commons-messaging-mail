@@ -65,7 +65,7 @@ public abstract class MailTestSupport extends TestSupport {
             // Sling Commons Messaging Mail
             testBundle("bundle.filename"),
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.messaging").versionAsInProject(),
-            mavenBundle().groupId("org.apache.servicemix.specs").artifactId("org.apache.servicemix.specs.activation-api-1.1").versionAsInProject(),
+            mavenBundle().groupId("jakarta.activation").artifactId("jakarta.activation-api").versionAsInProject(),
             mavenBundle().groupId("jakarta.mail").artifactId("jakarta.mail-api").versionAsInProject(),
             mavenBundle().groupId("com.sun.mail").artifactId("jakarta.mail").versionAsInProject(),
             mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").versionAsInProject(),
@@ -79,7 +79,6 @@ public abstract class MailTestSupport extends TestSupport {
             mavenBundle().groupId("com.google.guava").artifactId("failureaccess").versionAsInProject(),
             mavenBundle().groupId("com.googlecode.java-diff-utils").artifactId("diffutils").versionAsInProject(),
             mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
-            mavenBundle().groupId("org.apache.commons").artifactId("commons-email").versionAsInProject(),
             greenmail(),
             thymeleaf(),
             vmOption(System.getProperty("jacoco.command"))

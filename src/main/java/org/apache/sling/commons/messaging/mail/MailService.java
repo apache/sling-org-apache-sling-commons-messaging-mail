@@ -20,7 +20,7 @@ package org.apache.sling.commons.messaging.mail;
 
 import java.util.concurrent.CompletableFuture;
 
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 
 import org.apache.sling.commons.messaging.MessageService;
 import org.jetbrains.annotations.NotNull;

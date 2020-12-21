@@ -20,8 +20,8 @@ package org.apache.sling.commons.messaging.mail.internal;
 
 import java.util.UUID;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import org.apache.sling.commons.messaging.mail.MessageIdProvider;
 import org.jetbrains.annotations.NotNull;

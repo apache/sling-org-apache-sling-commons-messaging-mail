@@ -33,14 +33,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.event.ConnectionEvent;
-import javax.mail.event.ConnectionListener;
-import javax.mail.event.TransportEvent;
-import javax.mail.event.TransportListener;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.Message;
+import jakarta.mail.Session;
+import jakarta.mail.event.ConnectionEvent;
+import jakarta.mail.event.ConnectionListener;
+import jakarta.mail.event.TransportEvent;
+import jakarta.mail.event.TransportListener;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
 import com.icegreen.greenmail.util.DummySSLSocketFactory;
 import com.icegreen.greenmail.util.GreenMail;
