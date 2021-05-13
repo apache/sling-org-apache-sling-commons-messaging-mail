@@ -72,13 +72,13 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder html(@NotNull final String html);
 
-    @NotNull MessageBuilder attachment(@NotNull final byte[] content, @NotNull final String type, @NotNull final String filename);
+    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename);
 
-    @NotNull MessageBuilder attachment(@NotNull final byte[] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers);
+    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers);
 
-    @NotNull MessageBuilder inline(@NotNull final byte[] content, @NotNull final String type, @NotNull final String cid);
+    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid);
 
-    @NotNull MessageBuilder inline(@NotNull final byte[] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers);
+    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers);
 
     @NotNull MimeMessage build() throws MessagingException;
 

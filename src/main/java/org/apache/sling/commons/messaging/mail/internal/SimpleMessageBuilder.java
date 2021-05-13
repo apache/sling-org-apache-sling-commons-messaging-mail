@@ -236,24 +236,24 @@ public class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder attachment(@NotNull final byte[] content, @NotNull final String type, @NotNull final String filename) {
+    public @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename) {
         return attachment(content, type, filename, null);
     }
 
     @Override
-    public @NotNull MessageBuilder attachment(@NotNull final byte[] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers) {
+    public @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers) {
         final Attachment attachment = new Attachment(content, type, filename, null);
         this.attachments.add(attachment);
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder inline(@NotNull final byte[] content, @NotNull final String type, @NotNull final String cid) {
+    public @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid) {
         return inline(content, type, cid, null);
     }
 
     @Override
-    public @NotNull MessageBuilder inline(@NotNull final byte[] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers) {
+    public @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers) {
         final Inline inline = new Inline(content, type, cid, headers);
         this.inlines.add(inline);
         return this;
@@ -442,7 +442,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
         final Header[] headers;
 
-        Attachment(@NotNull final byte[] content, @NotNull final String type, @NotNull final String filename, @Nullable final Header[] headers) {
+        Attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Header[] headers) {
             this.content = content;
             this.type = type;
             this.filename = filename;
@@ -461,7 +461,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
         final Header[] headers;
 
-        Inline(@NotNull final byte[] content, @NotNull final String type, @NotNull final String cid, @Nullable final Header[] headers) {
+        Inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Header[] headers) {
             this.content = content;
             this.type = type;
             this.cid = cid;
