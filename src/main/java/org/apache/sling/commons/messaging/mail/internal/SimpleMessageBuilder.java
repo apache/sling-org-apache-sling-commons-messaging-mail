@@ -50,17 +50,17 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     private final Session session;
 
-    private InternetHeaders headers = new InternetHeaders();
+    private final InternetHeaders headers = new InternetHeaders();
 
     private InternetAddress from;
 
-    private List<InternetAddress> toRecipients = new LinkedList<>();
+    private final List<InternetAddress> toRecipients = new LinkedList<>();
 
-    private List<InternetAddress> ccRecipients = new LinkedList<>();
+    private final List<InternetAddress> ccRecipients = new LinkedList<>();
 
-    private List<InternetAddress> bccRecipients = new LinkedList<>();
+    private final List<InternetAddress> bccRecipients = new LinkedList<>();
 
-    private List<InternetAddress> replyTos = new LinkedList<>();
+    private final List<InternetAddress> replyTos = new LinkedList<>();
 
     private String subject;
 
@@ -68,9 +68,9 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     private String html;
 
-    private List<Attachment> attachments = new LinkedList<>();
+    private final List<Attachment> attachments = new LinkedList<>();
 
-    private List<Inline> inlines = new LinkedList<>();
+    private final List<Inline> inlines = new LinkedList<>();
 
     private static final String CONTENT_TYPE_TEXT_HTML = "text/html; charset=utf-8";
 
