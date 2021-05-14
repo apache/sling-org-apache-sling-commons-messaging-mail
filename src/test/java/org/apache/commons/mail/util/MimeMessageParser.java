@@ -144,14 +144,10 @@ public class MimeMessageParser
      * @return the 'replyTo' address of the email
      * @throws Exception parsing the mime message failed
      */
-    public String getReplyTo() throws Exception
+    public List<jakarta.mail.Address> getReplyTo() throws Exception
     {
         final jakarta.mail.Address[] addresses = this.mimeMessage.getReplyTo();
-        if (addresses == null || addresses.length == 0)
-        {
-            return null;
-        }
-        return ((InternetAddress) addresses[0]).getAddress();
+        return addresses != null ? Arrays.asList(addresses) : new ArrayList<jakarta.mail.Address>();
     }
 
     /**

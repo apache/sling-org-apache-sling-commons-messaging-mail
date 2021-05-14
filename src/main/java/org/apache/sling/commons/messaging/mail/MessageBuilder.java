@@ -18,6 +18,8 @@
  */
 package org.apache.sling.commons.messaging.mail;
 
+import java.util.Collection;
+
 import jakarta.mail.Header;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
@@ -48,11 +50,23 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder to(@NotNull final String address, @NotNull final String name) throws AddressException;
 
+    @NotNull MessageBuilder to(@NotNull final InternetAddress[] addresses);
+
+    @NotNull MessageBuilder to(@NotNull final String[] addresses) throws AddressException;
+
+    @NotNull MessageBuilder to(@NotNull final Collection<String> addresses) throws AddressException;
+
     @NotNull MessageBuilder cc(@NotNull final InternetAddress cc);
 
     @NotNull MessageBuilder cc(@NotNull final String address) throws AddressException;
 
     @NotNull MessageBuilder cc(@NotNull final String address, @NotNull final String name) throws AddressException;
+
+    @NotNull MessageBuilder cc(@NotNull final InternetAddress[] addresses);
+
+    @NotNull MessageBuilder cc(@NotNull final String[] addresses) throws AddressException;
+
+    @NotNull MessageBuilder cc(@NotNull final Collection<String> addresses) throws AddressException;
 
     @NotNull MessageBuilder bcc(@NotNull final InternetAddress bcc);
 
@@ -60,11 +74,23 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder bcc(@NotNull final String address, final String name) throws AddressException;
 
+    @NotNull MessageBuilder bcc(@NotNull final InternetAddress[] addresses);
+
+    @NotNull MessageBuilder bcc(@NotNull final String[] addresses) throws AddressException;
+
+    @NotNull MessageBuilder bcc(@NotNull final Collection<String> addresses) throws AddressException;
+
     @NotNull MessageBuilder replyTo(@NotNull final InternetAddress replyTo);
 
     @NotNull MessageBuilder replyTo(@NotNull final String address) throws AddressException;
 
     @NotNull MessageBuilder replyTo(@NotNull final String address, final String name) throws AddressException;
+
+    @NotNull MessageBuilder replyTo(@NotNull final InternetAddress[] addresses);
+
+    @NotNull MessageBuilder replyTo(@NotNull final String[] addresses) throws AddressException;
+
+    @NotNull MessageBuilder replyTo(@NotNull final Collection<String> addresses) throws AddressException;
 
     @NotNull MessageBuilder subject(@NotNull final String subject);
 

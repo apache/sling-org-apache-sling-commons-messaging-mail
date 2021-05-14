@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -150,6 +152,28 @@ public class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
+    public @NotNull MessageBuilder to(@NotNull InternetAddress[] addresses) {
+        toRecipients.addAll(Arrays.asList(addresses));
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder to(@NotNull String[] addresses) throws AddressException {
+        for (final String address : addresses) {
+            to(address);
+        }
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder to(@NotNull Collection<String> addresses) throws AddressException {
+        for (final String address : addresses) {
+            to(address);
+        }
+        return this;
+    }
+
+    @Override
     public @NotNull MessageBuilder cc(@NotNull final InternetAddress cc) {
         ccRecipients.add(cc);
         return this;
@@ -170,6 +194,28 @@ public class SimpleMessageBuilder implements MessageBuilder {
             //
         }
         return cc(cc);
+    }
+
+    @Override
+    public @NotNull MessageBuilder cc(@NotNull InternetAddress[] addresses) {
+        ccRecipients.addAll(Arrays.asList(addresses));
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder cc(@NotNull String[] addresses) throws AddressException {
+        for (final String address : addresses) {
+            cc(address);
+        }
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder cc(@NotNull Collection<String> addresses) throws AddressException {
+        for (final String address : addresses) {
+            cc(address);
+        }
+        return this;
     }
 
     @Override
@@ -195,6 +241,28 @@ public class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
+    public @NotNull MessageBuilder bcc(@NotNull InternetAddress[] addresses) {
+        bccRecipients.addAll(Arrays.asList(addresses));
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder bcc(@NotNull String[] addresses) throws AddressException {
+        for (final String address : addresses) {
+            bcc(address);
+        }
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder bcc(@NotNull Collection<String> addresses) throws AddressException {
+        for (final String address : addresses) {
+            bcc(address);
+        }
+        return this;
+    }
+
+    @Override
     public @NotNull MessageBuilder replyTo(@NotNull final InternetAddress replyTo) {
         replyTos.add(replyTo);
         return this;
@@ -215,6 +283,28 @@ public class SimpleMessageBuilder implements MessageBuilder {
             //
         }
         return replyTo(replyTo);
+    }
+
+    @Override
+    public @NotNull MessageBuilder replyTo(@NotNull InternetAddress[] addresses) {
+        replyTos.addAll(Arrays.asList(addresses));
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder replyTo(@NotNull String[] addresses) throws AddressException {
+        for (final String address : addresses) {
+            replyTo(address);
+        }
+        return this;
+    }
+
+    @Override
+    public @NotNull MessageBuilder replyTo(@NotNull Collection<String> addresses) throws AddressException {
+        for (final String address : addresses) {
+            replyTo(address);
+        }
+        return this;
     }
 
     @Override
