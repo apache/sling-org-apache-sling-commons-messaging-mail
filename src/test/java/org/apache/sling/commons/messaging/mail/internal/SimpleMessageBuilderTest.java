@@ -49,6 +49,45 @@ public class SimpleMessageBuilderTest {
         addresses.put("e", new InternetAddress("e@example.org", "e"));
     }
 
+
+    @Test
+    public void testFromInternetAddress() throws Exception {
+        final InternetAddress address = addresses.get("a");
+        final Session session = Session.getInstance(properties);
+        final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
+        builder.from(address);
+        final MimeMessage message = builder.build();
+        final MimeMessageParser parser = new MimeMessageParser(message).parse();
+        final InternetAddress from = parser.getFrom();
+        assertThat(from).isEqualTo(address);
+    }
+
+    @Test
+    public void testFromAddress() throws Exception {
+        final String address = addresses.get("a").getAddress();
+        final Session session = Session.getInstance(properties);
+        final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
+        builder.from(address);
+        final MimeMessage message = builder.build();
+        final MimeMessageParser parser = new MimeMessageParser(message).parse();
+        final InternetAddress from = parser.getFrom();
+        assertThat(from.getAddress()).isEqualTo(address);
+    }
+
+    @Test
+    public void testFromAddressName() throws Exception {
+        final String address = addresses.get("a").getAddress();
+        final String name = addresses.get("a").getPersonal();
+        final Session session = Session.getInstance(properties);
+        final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
+        builder.from(address, name);
+        final MimeMessage message = builder.build();
+        final MimeMessageParser parser = new MimeMessageParser(message).parse();
+        final InternetAddress from = parser.getFrom();
+        assertThat(from.getAddress()).isEqualTo(address);
+        assertThat(from.getPersonal()).isEqualTo(name);
+    }
+
     // single to
 
     @Test

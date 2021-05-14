@@ -130,14 +130,14 @@ public class MimeMessageParser
      * @return the 'from' field of the message
      * @throws Exception parsing the mime message failed
      */
-    public String getFrom() throws Exception
+    public InternetAddress getFrom() throws Exception
     {
         final jakarta.mail.Address[] addresses = this.mimeMessage.getFrom();
         if (addresses == null || addresses.length == 0)
         {
             return null;
         }
-        return ((InternetAddress) addresses[0]).getAddress();
+        return ((InternetAddress) addresses[0]);
     }
 
     /**
