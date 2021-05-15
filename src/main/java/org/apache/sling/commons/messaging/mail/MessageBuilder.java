@@ -19,12 +19,12 @@
 package org.apache.sling.commons.messaging.mail;
 
 import java.util.Collection;
+import java.util.Map;
 
 import jakarta.mail.Header;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeMessage;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +36,7 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value);
 
-    @NotNull MessageBuilder headers(@NotNull final InternetHeaders headers);
+    @NotNull MessageBuilder headers(@NotNull final Map<String, String> headers);
 
     @NotNull MessageBuilder from(@NotNull final InternetAddress from);
 

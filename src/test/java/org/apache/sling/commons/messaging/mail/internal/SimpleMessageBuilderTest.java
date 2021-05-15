@@ -49,6 +49,45 @@ public class SimpleMessageBuilderTest {
         addresses.put("e", new InternetAddress("e@example.org", "e"));
     }
 
+    @Test
+    public void testHeader() throws Exception {
+        final Session session = Session.getInstance(properties);
+        final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
+        builder.header("a", "1");
+        builder.header("b", "2");
+        builder.header("c", "3");
+        final MimeMessage message = builder.build();
+        final String[] a = message.getHeader("a");
+        assertThat(a.length).isEqualTo(1);
+        assertThat(a[0]).isEqualTo("1");
+        final String[] b = message.getHeader("b");
+        assertThat(b.length).isEqualTo(1);
+        assertThat(b[0]).isEqualTo("2");
+        final String[] c = message.getHeader("c");
+        assertThat(c.length).isEqualTo(1);
+        assertThat(c[0]).isEqualTo("3");
+    }
+
+    @Test
+    public void testHeaders() throws Exception {
+        final Map<String, String> headers = new HashMap<>();
+        headers.put("a", "1");
+        headers.put("b", "2");
+        headers.put("c", "3");
+        final Session session = Session.getInstance(properties);
+        final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
+        builder.headers(headers);
+        final MimeMessage message = builder.build();
+        final String[] a = message.getHeader("a");
+        assertThat(a.length).isEqualTo(1);
+        assertThat(a[0]).isEqualTo("1");
+        final String[] b = message.getHeader("b");
+        assertThat(b.length).isEqualTo(1);
+        assertThat(b[0]).isEqualTo("2");
+        final String[] c = message.getHeader("c");
+        assertThat(c.length).isEqualTo(1);
+        assertThat(c[0]).isEqualTo("3");
+    }
 
     @Test
     public void testFromInternetAddress() throws Exception {

@@ -25,8 +25,10 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
@@ -38,7 +40,6 @@ import jakarta.mail.Part;
 import jakarta.mail.Session;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
@@ -52,7 +53,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     private final Session session;
 
-    private final InternetHeaders headers = new InternetHeaders();
+    private final Map<String, String> headers = new HashMap<>();
 
     private InternetAddress from;
 
@@ -92,16 +93,13 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     @Override
     public @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value) {
-        headers.setHeader(name, value);
+        headers.put(name, value);
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder headers(@NotNull final InternetHeaders headers) {
-        while (headers.getAllHeaders().hasMoreElements()) {
-            final Header header = headers.getAllHeaders().nextElement();
-            this.headers.setHeader(header.getName(), header.getValue());
-        }
+    public @NotNull MessageBuilder headers(@NotNull final Map<String, String> headers) {
+        this.headers.putAll(headers);
         return this;
     }
 
@@ -349,7 +347,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
         return this;
     }
 
-    private InternetHeaders headers() {
+    private Map<String, String> headers() {
         return headers;
     }
 
@@ -412,9 +410,8 @@ public class SimpleMessageBuilder implements MessageBuilder {
     public @NotNull MimeMessage build() throws MessagingException {
         final MimeMessage message = new MimeMessage(session);
 
-        while (headers().getAllHeaders().hasMoreElements()) {
-            final Header header = headers.getAllHeaders().nextElement();
-            message.setHeader(header.getName(), header.getValue());
+        for (final Map.Entry<String, String> header : headers().entrySet()) {
+            message.setHeader(header.getKey(), header.getValue());
         }
 
         message.setFrom(from());
