@@ -330,7 +330,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     @Override
     public @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers) {
-        final Attachment attachment = new Attachment(content, type, filename, null);
+        final Attachment attachment = new Attachment(content, type, filename, headers);
         this.attachments.add(attachment);
         return this;
     }
