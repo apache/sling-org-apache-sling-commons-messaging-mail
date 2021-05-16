@@ -19,7 +19,6 @@
 package org.apache.sling.commons.messaging.mail;
 
 import java.util.Collection;
-import java.util.Map;
 
 import jakarta.mail.Header;
 import jakarta.mail.MessagingException;
