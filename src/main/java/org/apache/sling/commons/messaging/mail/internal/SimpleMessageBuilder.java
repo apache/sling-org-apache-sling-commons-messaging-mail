@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     private final Session session;
 
-    private final Map<String, String> headers = new HashMap<>();
+    private final List<Header> headers = new LinkedList<>();
 
     private InternetAddress from;
 
@@ -93,13 +92,14 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
     @Override
     public @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value) {
-        headers.put(name, value);
+        final Header header = new Header(name, value);
+        headers.add(header);
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder headers(@NotNull final Map<String, String> headers) {
-        this.headers.putAll(headers);
+    public @NotNull MessageBuilder headers(@NotNull final Collection<Header> headers) {
+        this.headers.addAll(headers);
         return this;
     }
 
@@ -329,7 +329,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers) {
+    public @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Collection<Header> headers) {
         final Attachment attachment = new Attachment(content, type, filename, headers);
         this.attachments.add(attachment);
         return this;
@@ -341,13 +341,13 @@ public class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers) {
+    public @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Collection<Header> headers) {
         final Inline inline = new Inline(content, type, cid, headers);
         this.inlines.add(inline);
         return this;
     }
 
-    private Map<String, String> headers() {
+    private List<Header> headers() {
         return headers;
     }
 
@@ -410,8 +410,8 @@ public class SimpleMessageBuilder implements MessageBuilder {
     public @NotNull MimeMessage build() throws MessagingException {
         final MimeMessage message = new MimeMessage(session);
 
-        for (final Map.Entry<String, String> header : headers().entrySet()) {
-            message.setHeader(header.getKey(), header.getValue());
+        for (final Header header : headers()) {
+            message.setHeader(header.getName(), header.getValue());
         }
 
         message.setFrom(from());
@@ -513,7 +513,7 @@ public class SimpleMessageBuilder implements MessageBuilder {
         part.setDataHandler(handler);
     }
 
-    private static void setHeaders(final MimeBodyPart part, final Header[] headers) throws MessagingException {
+    private static void setHeaders(final MimeBodyPart part, final Collection<Header> headers) throws MessagingException {
         for (final Header header : headers) {
             part.setHeader(header.getName(), header.getValue());
         }
@@ -527,9 +527,9 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
         final String filename;
 
-        final Header[] headers;
+        final Collection<Header> headers;
 
-        Attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Header[] headers) {
+        Attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Collection<Header> headers) {
             this.content = content;
             this.type = type;
             this.filename = filename;
@@ -546,9 +546,9 @@ public class SimpleMessageBuilder implements MessageBuilder {
 
         final String cid;
 
-        final Header[] headers;
+        final Collection<Header> headers;
 
-        Inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Header[] headers) {
+        Inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Collection<Header> headers) {
             this.content = content;
             this.type = type;
             this.cid = cid;

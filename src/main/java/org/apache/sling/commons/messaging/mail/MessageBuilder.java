@@ -36,7 +36,7 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value);
 
-    @NotNull MessageBuilder headers(@NotNull final Map<String, String> headers);
+    @NotNull MessageBuilder headers(@NotNull final Collection<Header> headers);
 
     @NotNull MessageBuilder from(@NotNull final InternetAddress from);
 
@@ -100,11 +100,11 @@ public interface MessageBuilder {
 
     @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename);
 
-    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable Header[] headers);
+    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Collection<Header> headers);
 
     @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid);
 
-    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable Header[] headers);
+    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Collection<Header> headers);
 
     @NotNull MimeMessage build() throws MessagingException;
 

@@ -18,11 +18,14 @@
  */
 package org.apache.sling.commons.messaging.mail.internal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import jakarta.mail.Header;
 import jakarta.mail.Session;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -70,10 +73,10 @@ public class SimpleMessageBuilderTest {
 
     @Test
     public void testHeaders() throws Exception {
-        final Map<String, String> headers = new HashMap<>();
-        headers.put("a", "1");
-        headers.put("b", "2");
-        headers.put("c", "3");
+        final Collection<Header> headers = new ArrayList<>();
+        headers.add(new Header("a", "1"));
+        headers.add(new Header("b", "2"));
+        headers.add(new Header("c", "3"));
         final Session session = Session.getInstance(properties);
         final SimpleMessageBuilder builder = new SimpleMessageBuilder(session);
         builder.headers(headers);
