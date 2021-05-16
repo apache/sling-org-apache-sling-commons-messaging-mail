@@ -120,7 +120,7 @@ public class SimpleMailService implements MailService {
 
     private final Logger logger = LoggerFactory.getLogger(SimpleMailService.class);
 
-    public SimpleMailService() {
+    public SimpleMailService() { //
     }
 
     @Activate
