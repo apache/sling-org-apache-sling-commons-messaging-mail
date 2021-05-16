@@ -6,7 +6,7 @@
 
 This module is part of the [Apache Sling](https://sling.apache.org) project.
 
-This module provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) (former [JavaMail](https://javaee.github.io/javamail/)) including a message builder and a service to send mails via SMTPS.
+This module provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) 2.0 (package `jakarta.mail`) including a message builder and a service to send mails via SMTPS.
 
 * Mail Service: sends MIME messages.
 * Message Builder: builds plain text and HTML messages with attachments and inline images 
