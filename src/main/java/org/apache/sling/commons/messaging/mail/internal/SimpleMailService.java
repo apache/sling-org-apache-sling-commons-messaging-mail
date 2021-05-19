@@ -30,7 +30,6 @@ import jakarta.mail.event.ConnectionListener;
 import jakarta.mail.event.TransportListener;
 import jakarta.mail.internet.MimeMessage;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.commons.crypto.CryptoService;
 import org.apache.sling.commons.messaging.MessageService;
 import org.apache.sling.commons.messaging.mail.MailService;
@@ -151,8 +150,8 @@ public class SimpleMailService implements MailService {
         threadPool = threadPoolManager.get(configuration.threadpool_name());
 
         final Properties properties = new Properties();
-        final String from = configuration.mail_smtps_from();
-        if (StringUtils.isNotBlank(from)) {
+        final String from = configuration.mail_smtps_from().trim();
+        if (!from.isEmpty()) {
             properties.setProperty(MAIL_SMTPS_FROM, from);
         }
 

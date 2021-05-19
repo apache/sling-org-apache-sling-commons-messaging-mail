@@ -67,7 +67,6 @@ public abstract class MailTestSupport extends TestSupport {
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.messaging").versionAsInProject(),
             mavenBundle().groupId("org.apache.servicemix.specs").artifactId("org.apache.servicemix.specs.activation-api-2.0.1").versionAsInProject(),
             mavenBundle().groupId("com.sun.mail").artifactId("jakarta.mail").versionAsInProject(),
-            mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").versionAsInProject(),
             scr(),
             slingCommonsCrypto(),
             slingCommonsThreads(),
@@ -110,7 +109,7 @@ public abstract class MailTestSupport extends TestSupport {
     private static ModifiableCompositeOption slingCommonsCrypto() {
         return composite(
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.crypto").versionAsInProject(),
-            mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").versionAsInProject(),
+            mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").version(SlingOptions.versionResolver),
             mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.jasypt").versionAsInProject()
         );
     }
