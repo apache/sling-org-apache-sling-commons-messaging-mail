@@ -19,6 +19,7 @@
 package org.apache.sling.commons.messaging.mail.internal;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -150,9 +151,9 @@ public class SimpleMailService implements MailService {
         threadPool = threadPoolManager.get(configuration.threadpool_name());
 
         final Properties properties = new Properties();
-        final String from = configuration.mail_smtps_from().trim();
-        if (!from.isEmpty()) {
-            properties.setProperty(MAIL_SMTPS_FROM, from);
+        final String from = configuration.mail_smtps_from();
+        if (Objects.nonNull(from) && !from.isBlank()) {
+            properties.setProperty(MAIL_SMTPS_FROM, from.trim());
         }
 
         session = Session.getInstance(properties);
