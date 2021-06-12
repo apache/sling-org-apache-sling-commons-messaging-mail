@@ -1,3 +1,5 @@
+-noimportjava: true
+
 -removeheaders:\
   Include-Resource,\
   Private-Package
