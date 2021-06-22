@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -31,6 +32,8 @@ import org.apache.sling.testing.paxexam.SlingOptions;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.options.MavenArtifactProvisionOption;
 import org.ops4j.pax.exam.options.ModifiableCompositeOption;
+import org.ops4j.pax.exam.options.OptionalCompositeOption;
+import org.ops4j.pax.exam.options.extra.VMOption;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.thymeleaf.ITemplateEngine;
@@ -47,6 +50,7 @@ import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.vmOption;
+import static org.ops4j.pax.exam.CoreOptions.when;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 
 public abstract class MailTestSupport extends TestSupport {
@@ -79,8 +83,15 @@ public abstract class MailTestSupport extends TestSupport {
             mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
             greenmail(),
             thymeleaf(),
-            vmOption(System.getProperty("jacoco.command"))
+            jacoco() // remove with Testing PaxExam 4.0
         );
+    }
+
+    // remove with Testing PaxExam 4.0
+    protected OptionalCompositeOption jacoco() {
+        final String jacocoCommand = System.getProperty("jacoco.command");
+        final VMOption option = Objects.nonNull(jacocoCommand) && !jacocoCommand.trim().isEmpty() ? vmOption(jacocoCommand) : null;
+        return when(Objects.nonNull(option)).useOptions(option);
     }
 
     private static ModifiableCompositeOption greenmail() {
