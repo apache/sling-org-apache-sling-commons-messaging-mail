@@ -109,7 +109,6 @@ public abstract class MailTestSupport extends TestSupport {
     private static ModifiableCompositeOption slingCommonsCrypto() {
         return composite(
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.crypto").versionAsInProject(),
-            mavenBundle().groupId("org.apache.commons").artifactId("commons-lang3").version(SlingOptions.versionResolver),
             mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.jasypt").versionAsInProject()
         );
     }
