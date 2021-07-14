@@ -35,8 +35,6 @@
   <description>Send mails via SMTPS</description>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sling.java.version>11</sling.java.version>
     <org.ops4j.pax.exam.version>4.13.3</org.ops4j.pax.exam.version>
   </properties>
