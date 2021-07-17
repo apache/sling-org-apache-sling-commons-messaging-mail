@@ -154,7 +154,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
                 .put("transportListeners.target", "(is=used)")
                 .asOption(),
             // Commons Crypto
-            factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptStandardPBEStringCryptoService")
+            factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptStandardPbeStringCryptoService")
                 .put("algorithm", "PBEWITHHMACSHA512ANDAES_256")
                 .asOption(),
             factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptRandomIvGeneratorRegistrar")
