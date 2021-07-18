@@ -49,6 +49,18 @@ import org.jetbrains.annotations.Nullable;
 
 public final class SimpleMessageBuilder implements MessageBuilder {
 
+    private static final String CONTENT_TYPE_TEXT_HTML = "text/html; charset=utf-8";
+
+    private static final String CONTENT_TYPE_TEXT_PLAIN = "text/plain; charset=utf-8";
+
+    private static final String CHARSET_UTF8 = "utf-8";
+
+    private static final String MULTIPART_SUBTYPE_MIXED = "mixed";
+
+    private static final String MULTIPART_SUBTYPE_ALTERNATIVE = "alternative";
+
+    private static final String MULTIPART_SUBTYPE_RELATED = "related";
+
     private final Session session;
 
     private final List<Header> headers = new LinkedList<>();
@@ -72,18 +84,6 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     private final List<Attachment> attachments = new LinkedList<>();
 
     private final List<Inline> inlines = new LinkedList<>();
-
-    private static final String CONTENT_TYPE_TEXT_HTML = "text/html; charset=utf-8";
-
-    private static final String CONTENT_TYPE_TEXT_PLAIN = "text/plain; charset=utf-8";
-
-    private static final String CHARSET_UTF8 = "utf-8";
-
-    private static final String MULTIPART_SUBTYPE_MIXED = "mixed";
-
-    private static final String MULTIPART_SUBTYPE_ALTERNATIVE = "alternative";
-
-    private static final String MULTIPART_SUBTYPE_RELATED = "related";
 
     SimpleMessageBuilder(@NotNull final Session session) {
         this.session = session;

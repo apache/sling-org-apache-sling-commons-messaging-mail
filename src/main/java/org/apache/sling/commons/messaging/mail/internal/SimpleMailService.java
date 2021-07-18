@@ -69,6 +69,14 @@ import org.slf4j.LoggerFactory;
 )
 public final class SimpleMailService implements MailService {
 
+    private static final String SMTPS_PROTOCOL = "smtps";
+
+    // https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html
+
+    private static final String MAIL_SMTPS_FROM = "mail.smtps.from";
+
+    private static final String MESSAGE_ID_HEADER = "Message-ID";
+
     @Reference(
         cardinality = ReferenceCardinality.OPTIONAL,
         policy = ReferencePolicy.DYNAMIC,
@@ -109,14 +117,6 @@ public final class SimpleMailService implements MailService {
     private SimpleMailServiceConfiguration configuration;
 
     private Session session;
-
-    private static final String SMTPS_PROTOCOL = "smtps";
-
-    // https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html
-
-    private static final String MAIL_SMTPS_FROM = "mail.smtps.from";
-
-    private static final String MESSAGE_ID_HEADER = "Message-ID";
 
     private final Logger logger = LoggerFactory.getLogger(SimpleMailService.class);
 
