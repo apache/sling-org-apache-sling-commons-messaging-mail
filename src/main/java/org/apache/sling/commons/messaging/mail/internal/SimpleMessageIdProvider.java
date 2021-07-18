@@ -69,7 +69,7 @@ public final class SimpleMessageIdProvider implements MessageIdProvider {
     }
 
     @Override
-    public @NotNull String getMessageId(@NotNull MimeMessage message) throws MessagingException {
+    public @NotNull String getMessageId(@NotNull final MimeMessage message) throws MessagingException {
         return String.format("%s.%s@%s", UUID.randomUUID().toString(), System.currentTimeMillis(), configuration.host());
     }
 

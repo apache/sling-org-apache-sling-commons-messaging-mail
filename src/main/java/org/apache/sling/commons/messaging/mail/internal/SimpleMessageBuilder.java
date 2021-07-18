@@ -149,13 +149,13 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder to(@NotNull InternetAddress[] addresses) {
+    public @NotNull MessageBuilder to(@NotNull final InternetAddress[] addresses) {
         toRecipients.addAll(Arrays.asList(addresses));
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder to(@NotNull String[] addresses) throws AddressException {
+    public @NotNull MessageBuilder to(@NotNull final String[] addresses) throws AddressException {
         for (final String address : addresses) {
             to(address);
         }
@@ -163,7 +163,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder to(@NotNull Collection<String> addresses) throws AddressException {
+    public @NotNull MessageBuilder to(@NotNull final Collection<String> addresses) throws AddressException {
         for (final String address : addresses) {
             to(address);
         }
@@ -194,13 +194,13 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder cc(@NotNull InternetAddress[] addresses) {
+    public @NotNull MessageBuilder cc(@NotNull final InternetAddress[] addresses) {
         ccRecipients.addAll(Arrays.asList(addresses));
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder cc(@NotNull String[] addresses) throws AddressException {
+    public @NotNull MessageBuilder cc(@NotNull final String[] addresses) throws AddressException {
         for (final String address : addresses) {
             cc(address);
         }
@@ -208,7 +208,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder cc(@NotNull Collection<String> addresses) throws AddressException {
+    public @NotNull MessageBuilder cc(@NotNull final Collection<String> addresses) throws AddressException {
         for (final String address : addresses) {
             cc(address);
         }
@@ -238,13 +238,13 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder bcc(@NotNull InternetAddress[] addresses) {
+    public @NotNull MessageBuilder bcc(@NotNull final InternetAddress[] addresses) {
         bccRecipients.addAll(Arrays.asList(addresses));
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder bcc(@NotNull String[] addresses) throws AddressException {
+    public @NotNull MessageBuilder bcc(@NotNull final String[] addresses) throws AddressException {
         for (final String address : addresses) {
             bcc(address);
         }
@@ -252,7 +252,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder bcc(@NotNull Collection<String> addresses) throws AddressException {
+    public @NotNull MessageBuilder bcc(@NotNull final Collection<String> addresses) throws AddressException {
         for (final String address : addresses) {
             bcc(address);
         }
@@ -283,13 +283,13 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder replyTo(@NotNull InternetAddress[] addresses) {
+    public @NotNull MessageBuilder replyTo(@NotNull final InternetAddress[] addresses) {
         replyTos.addAll(Arrays.asList(addresses));
         return this;
     }
 
     @Override
-    public @NotNull MessageBuilder replyTo(@NotNull String[] addresses) throws AddressException {
+    public @NotNull MessageBuilder replyTo(@NotNull final String[] addresses) throws AddressException {
         for (final String address : addresses) {
             replyTo(address);
         }
@@ -297,7 +297,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
     }
 
     @Override
-    public @NotNull MessageBuilder replyTo(@NotNull Collection<String> addresses) throws AddressException {
+    public @NotNull MessageBuilder replyTo(@NotNull final Collection<String> addresses) throws AddressException {
         for (final String address : addresses) {
             replyTo(address);
         }
