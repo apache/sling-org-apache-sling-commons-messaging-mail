@@ -50,6 +50,9 @@ public final class SimpleMessageIdProvider implements MessageIdProvider {
 
     private final Logger logger = LoggerFactory.getLogger(SimpleMessageIdProvider.class);
 
+    public SimpleMessageIdProvider() { //
+    }
+
     @Activate
     private void activate(final SimpleMessageIdProviderConfiguration configuration) {
         logger.debug("activating");
