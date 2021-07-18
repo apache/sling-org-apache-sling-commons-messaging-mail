@@ -227,6 +227,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         return bcc(bcc);
     }
 
+    @Override
     public @NotNull MessageBuilder bcc(@NotNull final String address, final String name) throws AddressException {
         final InternetAddress bcc = new InternetAddress(address);
         try {
@@ -406,6 +407,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         return !inlines().isEmpty();
     }
 
+    @Override
     public @NotNull MimeMessage build() throws MessagingException {
         final MimeMessage message = new MimeMessage(session);
 
