@@ -474,7 +474,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
 
     private static void addAttachments(final MimeMultipart parent, final List<Attachment> attachments) throws MessagingException {
         for (final Attachment attachment : attachments) {
-            try (final ByteArrayInputStream inputStream = new ByteArrayInputStream(attachment.content)) {
+            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(attachment.content)) {
                 final MimeBodyPart part = new MimeBodyPart();
                 part.setDisposition(Part.ATTACHMENT);
                 part.setFileName(attachment.filename);
@@ -492,7 +492,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
 
     private static void addInlines(final MimeMultipart parent, final List<Inline> inlines) throws MessagingException {
         for (final Inline inline : inlines) {
-            try (final ByteArrayInputStream inputStream = new ByteArrayInputStream(inline.content)) {
+            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(inline.content)) {
                 final MimeBodyPart part = new MimeBodyPart();
                 part.setDisposition(Part.INLINE);
                 part.setContentID(String.format("<%s>", inline.cid));

@@ -174,7 +174,7 @@ public final class SimpleMailService implements MailService {
             final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
             final String password = cryptoService.decrypt(configuration.password());
-            try (final Transport transport = session.getTransport(SMTPS_PROTOCOL)) {
+            try (Transport transport = session.getTransport(SMTPS_PROTOCOL)) {
                 final List<ConnectionListener> connectionListeners = this.connectionListeners;
                 connectionListeners.forEach(transport::addConnectionListener);
                 final List<TransportListener> transportListeners = this.transportListeners;
