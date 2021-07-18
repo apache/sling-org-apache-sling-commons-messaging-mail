@@ -114,6 +114,7 @@
         <version>3.14.0</version>
         <configuration>
           <targetJdk>${sling.java.version}</targetJdk>
+          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>
         </configuration>
         <executions>
           <execution>

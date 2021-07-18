@@ -27,6 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageIdProvider {
 
-    @NotNull String getMessageId(@NotNull final MimeMessage message) throws MessagingException;
+    public abstract @NotNull String getMessageId(@NotNull final MimeMessage message) throws MessagingException;
 
 }

@@ -33,78 +33,78 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBuilder {
 
-    @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value);
+    public abstract @NotNull MessageBuilder header(@NotNull final String name, @Nullable final String value);
 
-    @NotNull MessageBuilder headers(@NotNull final Collection<Header> headers);
+    public abstract @NotNull MessageBuilder headers(@NotNull final Collection<Header> headers);
 
-    @NotNull MessageBuilder from(@NotNull final InternetAddress from);
+    public abstract @NotNull MessageBuilder from(@NotNull final InternetAddress from);
 
-    @NotNull MessageBuilder from(@NotNull final String address) throws AddressException;
+    public abstract @NotNull MessageBuilder from(@NotNull final String address) throws AddressException;
 
-    @NotNull MessageBuilder from(@NotNull final String address, @NotNull final String name) throws AddressException;
+    public abstract @NotNull MessageBuilder from(@NotNull final String address, @NotNull final String name) throws AddressException;
 
-    @NotNull MessageBuilder to(@NotNull final InternetAddress to);
+    public abstract @NotNull MessageBuilder to(@NotNull final InternetAddress to);
 
-    @NotNull MessageBuilder to(@NotNull final String address) throws AddressException;
+    public abstract @NotNull MessageBuilder to(@NotNull final String address) throws AddressException;
 
-    @NotNull MessageBuilder to(@NotNull final String address, @NotNull final String name) throws AddressException;
+    public abstract @NotNull MessageBuilder to(@NotNull final String address, @NotNull final String name) throws AddressException;
 
-    @NotNull MessageBuilder to(@NotNull final InternetAddress[] addresses);
+    public abstract @NotNull MessageBuilder to(@NotNull final InternetAddress[] addresses);
 
-    @NotNull MessageBuilder to(@NotNull final String[] addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder to(@NotNull final String[] addresses) throws AddressException;
 
-    @NotNull MessageBuilder to(@NotNull final Collection<String> addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder to(@NotNull final Collection<String> addresses) throws AddressException;
 
-    @NotNull MessageBuilder cc(@NotNull final InternetAddress cc);
+    public abstract @NotNull MessageBuilder cc(@NotNull final InternetAddress cc);
 
-    @NotNull MessageBuilder cc(@NotNull final String address) throws AddressException;
+    public abstract @NotNull MessageBuilder cc(@NotNull final String address) throws AddressException;
 
-    @NotNull MessageBuilder cc(@NotNull final String address, @NotNull final String name) throws AddressException;
+    public abstract @NotNull MessageBuilder cc(@NotNull final String address, @NotNull final String name) throws AddressException;
 
-    @NotNull MessageBuilder cc(@NotNull final InternetAddress[] addresses);
+    public abstract @NotNull MessageBuilder cc(@NotNull final InternetAddress[] addresses);
 
-    @NotNull MessageBuilder cc(@NotNull final String[] addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder cc(@NotNull final String[] addresses) throws AddressException;
 
-    @NotNull MessageBuilder cc(@NotNull final Collection<String> addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder cc(@NotNull final Collection<String> addresses) throws AddressException;
 
-    @NotNull MessageBuilder bcc(@NotNull final InternetAddress bcc);
+    public abstract @NotNull MessageBuilder bcc(@NotNull final InternetAddress bcc);
 
-    @NotNull MessageBuilder bcc(@NotNull final String address) throws AddressException;
+    public abstract @NotNull MessageBuilder bcc(@NotNull final String address) throws AddressException;
 
-    @NotNull MessageBuilder bcc(@NotNull final String address, final String name) throws AddressException;
+    public abstract @NotNull MessageBuilder bcc(@NotNull final String address, final String name) throws AddressException;
 
-    @NotNull MessageBuilder bcc(@NotNull final InternetAddress[] addresses);
+    public abstract @NotNull MessageBuilder bcc(@NotNull final InternetAddress[] addresses);
 
-    @NotNull MessageBuilder bcc(@NotNull final String[] addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder bcc(@NotNull final String[] addresses) throws AddressException;
 
-    @NotNull MessageBuilder bcc(@NotNull final Collection<String> addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder bcc(@NotNull final Collection<String> addresses) throws AddressException;
 
-    @NotNull MessageBuilder replyTo(@NotNull final InternetAddress replyTo);
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final InternetAddress replyTo);
 
-    @NotNull MessageBuilder replyTo(@NotNull final String address) throws AddressException;
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final String address) throws AddressException;
 
-    @NotNull MessageBuilder replyTo(@NotNull final String address, final String name) throws AddressException;
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final String address, final String name) throws AddressException;
 
-    @NotNull MessageBuilder replyTo(@NotNull final InternetAddress[] addresses);
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final InternetAddress[] addresses);
 
-    @NotNull MessageBuilder replyTo(@NotNull final String[] addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final String[] addresses) throws AddressException;
 
-    @NotNull MessageBuilder replyTo(@NotNull final Collection<String> addresses) throws AddressException;
+    public abstract @NotNull MessageBuilder replyTo(@NotNull final Collection<String> addresses) throws AddressException;
 
-    @NotNull MessageBuilder subject(@NotNull final String subject);
+    public abstract @NotNull MessageBuilder subject(@NotNull final String subject);
 
-    @NotNull MessageBuilder text(@NotNull final String text);
+    public abstract @NotNull MessageBuilder text(@NotNull final String text);
 
-    @NotNull MessageBuilder html(@NotNull final String html);
+    public abstract @NotNull MessageBuilder html(@NotNull final String html);
 
-    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename);
+    public abstract @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename);
 
-    @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Collection<Header> headers);
+    public abstract @NotNull MessageBuilder attachment(final byte @NotNull [] content, @NotNull final String type, @NotNull final String filename, @Nullable final Collection<Header> headers);
 
-    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid);
+    public abstract @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid);
 
-    @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Collection<Header> headers);
+    public abstract @NotNull MessageBuilder inline(final byte @NotNull [] content, @NotNull final String type, @NotNull final String cid, @Nullable final Collection<Header> headers);
 
-    @NotNull MimeMessage build() throws MessagingException;
+    public abstract @NotNull MimeMessage build() throws MessagingException;
 
 }

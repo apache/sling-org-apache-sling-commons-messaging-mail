@@ -29,8 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MailService extends MessageService<MimeMessage, Void> {
 
-    @NotNull MessageBuilder getMessageBuilder();
+    public abstract @NotNull MessageBuilder getMessageBuilder();
 
-    @NotNull CompletableFuture<Void> sendMessage(@NotNull final MimeMessage message);
+    public abstract @NotNull CompletableFuture<Void> sendMessage(@NotNull MimeMessage message);
 
 }
