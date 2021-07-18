@@ -18,9 +18,6 @@
  */
 
 /**
- * Provides the Apache Sling Commons Messaging Mail API.
+ * Provides a simple implementation of the Apache Sling Commons Messaging Mail API using SMTPS (Simple Mail Transfer Protocol Secure).
  */
-@Version("2.0.0")
-package org.apache.sling.commons.messaging.mail;
-
-import org.osgi.annotation.versioning.Version;
+package org.apache.sling.commons.messaging.mail.internal;
