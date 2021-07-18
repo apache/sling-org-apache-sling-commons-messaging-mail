@@ -47,7 +47,7 @@ import org.apache.sling.commons.messaging.mail.MessageBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SimpleMessageBuilder implements MessageBuilder {
+public final class SimpleMessageBuilder implements MessageBuilder {
 
     private final Session session;
 

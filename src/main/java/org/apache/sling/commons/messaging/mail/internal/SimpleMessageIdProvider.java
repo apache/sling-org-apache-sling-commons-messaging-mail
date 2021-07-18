@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
     ocd = SimpleMessageIdProviderConfiguration.class,
     factory = true
 )
-public class SimpleMessageIdProvider implements MessageIdProvider {
+public final class SimpleMessageIdProvider implements MessageIdProvider {
 
     private SimpleMessageIdProviderConfiguration configuration;
 

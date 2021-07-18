@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
     ocd = SimpleMailServiceConfiguration.class,
     factory = true
 )
-public class SimpleMailService implements MailService {
+public final class SimpleMailService implements MailService {
 
     @Reference(
         cardinality = ReferenceCardinality.OPTIONAL,
