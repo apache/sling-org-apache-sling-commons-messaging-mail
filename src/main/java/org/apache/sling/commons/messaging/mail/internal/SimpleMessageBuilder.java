@@ -472,6 +472,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         parent.addBodyPart(part);
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private static void addAttachments(final MimeMultipart parent, final List<Attachment> attachments) throws MessagingException {
         for (final Attachment attachment : attachments) {
             try (ByteArrayInputStream inputStream = new ByteArrayInputStream(attachment.content)) {
@@ -490,6 +491,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         }
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private static void addInlines(final MimeMultipart parent, final List<Inline> inlines) throws MessagingException {
         for (final Inline inline : inlines) {
             try (ByteArrayInputStream inputStream = new ByteArrayInputStream(inline.content)) {
