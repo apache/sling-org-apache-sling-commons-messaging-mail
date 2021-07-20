@@ -21,4 +21,5 @@
 <suppressions>
   <suppress checks="ClassFanOutComplexity" files=".*\/SimpleMailService\.java"/>
   <suppress checks="ClassFanOutComplexity" files=".*\/SimpleMessageBuilder\.java"/>
+  <suppress checks="ClassDataAbstractionCoupling" files=".*\/SimpleMessageBuilder\.java"/>
 </suppressions>
