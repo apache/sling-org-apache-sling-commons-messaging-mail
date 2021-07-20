@@ -522,6 +522,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         }
     }
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     private static class Attachment {
 
         final byte[] content;
@@ -541,6 +542,7 @@ public final class SimpleMessageBuilder implements MessageBuilder {
 
     }
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     private static class Inline {
 
         final byte[] content;
