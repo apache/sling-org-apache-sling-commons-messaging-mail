@@ -24,6 +24,11 @@ import jakarta.mail.internet.MimeMessage;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * Provider for message identifiers.
+ *
+ * @see MimeMessage
+ */
 @ProviderType
 public interface MessageIdProvider {
 

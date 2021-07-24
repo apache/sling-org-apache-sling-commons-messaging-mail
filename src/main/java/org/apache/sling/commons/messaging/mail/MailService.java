@@ -26,6 +26,11 @@ import org.apache.sling.commons.messaging.MessageService;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * Service for sending MIME messages.
+ *
+ * @see MimeMessage
+ */
 @ProviderType
 public interface MailService extends MessageService<MimeMessage, Void> {
 

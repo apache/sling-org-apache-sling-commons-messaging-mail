@@ -30,6 +30,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * Builder for MIME messages.
+ *
+ * @see MimeMessage
+ */
 @ProviderType
 public interface MessageBuilder {
 
