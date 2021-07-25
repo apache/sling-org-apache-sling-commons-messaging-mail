@@ -54,18 +54,21 @@ public final class SimpleMessageIdProvider implements MessageIdProvider {
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final SimpleMessageIdProviderConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final SimpleMessageIdProviderConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         this.configuration = null;

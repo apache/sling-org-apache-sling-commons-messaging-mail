@@ -124,6 +124,7 @@ public final class SimpleMailService implements MailService {
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final SimpleMailServiceConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
@@ -131,6 +132,7 @@ public final class SimpleMailService implements MailService {
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final SimpleMailServiceConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
@@ -138,6 +140,7 @@ public final class SimpleMailService implements MailService {
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         this.configuration = null;
