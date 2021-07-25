@@ -119,8 +119,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         final InternetAddress from = new InternetAddress(address);
         try {
             from.setPersonal(name, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            //
+        } catch (UnsupportedEncodingException e) { // NOPMD
+            // fixed standard charset
         }
         return from(from);
     }
@@ -142,8 +142,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         final InternetAddress to = new InternetAddress(address);
         try {
             to.setPersonal(name, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            //
+        } catch (UnsupportedEncodingException e) { // NOPMD
+            // fixed standard charset
         }
         return to(to);
     }
@@ -187,8 +187,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         final InternetAddress cc = new InternetAddress(address);
         try {
             cc.setPersonal(name, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            //
+        } catch (UnsupportedEncodingException e) { // NOPMD
+            // fixed standard charset
         }
         return cc(cc);
     }
@@ -232,8 +232,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         final InternetAddress bcc = new InternetAddress(address);
         try {
             bcc.setPersonal(name, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            //
+        } catch (UnsupportedEncodingException e) { // NOPMD
+            // fixed standard charset
         }
         return bcc(bcc);
     }
@@ -277,8 +277,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
         final InternetAddress replyTo = new InternetAddress(address);
         try {
             replyTo.setPersonal(name, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            //
+        } catch (UnsupportedEncodingException e) { // NOPMD
+            // fixed standard charset
         }
         return replyTo(replyTo);
     }
