@@ -34,8 +34,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MailService extends MessageService<MimeMessage, Void> {
 
+    /**
+     * Provides the message builder for this service.
+     *
+     * @return the message builder for this service
+     */
     public abstract @NotNull MessageBuilder getMessageBuilder();
 
+    /**
+     * Sends the given MIME message.
+     *
+     * @param message the MIME message to send
+     * @return {@link java.util.concurrent.CompletableFuture} for signaling completion
+     */
     public abstract @NotNull CompletableFuture<Void> sendMessage(@NotNull MimeMessage message);
 
 }

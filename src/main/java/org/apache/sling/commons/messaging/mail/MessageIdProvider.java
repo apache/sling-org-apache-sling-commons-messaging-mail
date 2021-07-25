@@ -32,6 +32,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageIdProvider {
 
+    /**
+     * Provides an identifier for given message.
+     *
+     * @param message the message to provide an identifier for
+     * @return the message identifier
+     * @throws MessagingException if providing an identifier fails
+     * @see MimeMessage#getMessageID()
+     */
     public abstract @NotNull String getMessageId(@NotNull final MimeMessage message) throws MessagingException;
 
 }
