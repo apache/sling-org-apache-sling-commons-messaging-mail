@@ -47,6 +47,11 @@ import org.apache.sling.commons.messaging.mail.MessageBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Builder for MIME messages.<br>The message builder is using the {@link Session} form {@link SimpleMailService} and the standard charset <code>UTF-8</code>.
+ *
+ * @see MimeMessage
+ */
 public final class SimpleMessageBuilder implements MessageBuilder {
 
     private static final String CONTENT_TYPE_TEXT_HTML = "text/html; charset=utf-8";

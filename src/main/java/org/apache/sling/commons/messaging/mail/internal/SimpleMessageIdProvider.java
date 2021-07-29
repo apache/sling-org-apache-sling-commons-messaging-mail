@@ -35,6 +35,11 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provider for message identifiers.<br>Creates a <code>Message-ID</code> in form of <code>&lt;UUID&gt;.&lt;current time in milliseconds&gt;@&lt;host&gt;</code> where <code>host</code> is configurable.
+ *
+ * @see MimeMessage
+ */
 @Component(
     property = {
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Commons Messaging Mail – Simple Message ID Provider",

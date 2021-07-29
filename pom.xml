@@ -36,6 +36,7 @@
 
   <properties>
     <sling.java.version>11</sling.java.version>
+    <javadoc.excludePackageNames/>
     <org.ops4j.pax.exam.version>4.13.3</org.ops4j.pax.exam.version>
   </properties>
 

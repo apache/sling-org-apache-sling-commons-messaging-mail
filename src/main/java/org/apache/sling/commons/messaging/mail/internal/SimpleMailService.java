@@ -52,6 +52,11 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Service for sending MIME messages (mails) via <code>SMTPS</code> protocol.
+ *
+ * @see MimeMessage
+ */
 @Component(
     service = {
         MessageService.class,
