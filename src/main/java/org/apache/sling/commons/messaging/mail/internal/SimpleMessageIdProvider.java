@@ -18,6 +18,7 @@
  */
 package org.apache.sling.commons.messaging.mail.internal;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.mail.MessagingException;
@@ -71,12 +72,13 @@ public final class SimpleMessageIdProvider implements MessageIdProvider {
     @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
-        this.configuration = null;
     }
 
     @Override
     public @NotNull String getMessageId(@NotNull final MimeMessage message) throws MessagingException {
-        return String.format("%s.%s@%s", UUID.randomUUID().toString(), System.currentTimeMillis(), configuration.host());
+        final var configuration = this.configuration;
+        Objects.requireNonNull(configuration, "Configuration must not be null");
+        return String.format("%s.%s@%s", UUID.randomUUID(), System.currentTimeMillis(), configuration.host());
     }
 
 }
