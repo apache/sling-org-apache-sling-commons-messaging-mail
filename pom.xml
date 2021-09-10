@@ -60,6 +60,7 @@
         <configuration>
           <excludes combine.children="append">
             <exclude>**/*.txt</exclude>
+            <exclude>src/test/resources/mockito-extensions/*</exclude>
             <exclude>src/test/resources/password</exclude>
           </excludes>
         </configuration>

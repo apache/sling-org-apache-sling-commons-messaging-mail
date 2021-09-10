@@ -174,10 +174,16 @@ public final class SimpleMailService implements MailService {
 
     @Override
     public @NotNull CompletableFuture<Void> sendMessage(@NotNull final MimeMessage message) {
+        final var threadPool = this.threadPool;
+        Objects.requireNonNull(threadPool, "Thread pool must not be null");
         return CompletableFuture.runAsync(() -> send(message), runnable -> threadPool.submit(runnable));
     }
 
     private void send(@NotNull final MimeMessage message) {
+        final var configuration = this.configuration;
+        Objects.requireNonNull(configuration, "Configuration must not be null");
+        final var cryptoService = this.cryptoService;
+        Objects.requireNonNull(cryptoService, "Crypto service must not be null");
         try {
             final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
