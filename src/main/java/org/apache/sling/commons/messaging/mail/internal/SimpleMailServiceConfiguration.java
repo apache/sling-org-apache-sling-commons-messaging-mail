@@ -43,6 +43,12 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     String threadpool_name() default "default";
 
     @AttributeDefinition(
+        name = "SMTP SSL check server identity",
+        description = "check the server identity as specified by RFC 2595"
+    )
+    boolean mail_smtps_ssl_checkserveridentity() default true;
+
+    @AttributeDefinition(
         name = "SMTP from",
         description = "from address"
     )

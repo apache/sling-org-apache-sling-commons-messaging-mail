@@ -89,6 +89,7 @@ An external SMTP server for validating messages with real mail clients can be us
 
     mvn clean install\
       -Dsling.test.mail.smtps.server.external=true\
+      -Dsling.test.mail.smtps.ssl.checkserveridentity=true\
       -Dsling.test.mail.smtps.from=envelope-from@example.org\
       -Dsling.test.mail.smtps.host=localhost\
       -Dsling.test.mail.smtps.port=465\

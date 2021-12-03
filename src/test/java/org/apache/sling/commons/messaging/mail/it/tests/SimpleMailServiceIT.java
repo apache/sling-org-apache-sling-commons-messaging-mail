@@ -129,6 +129,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             baseConfiguration(),
             propagateSystemProperties(
                 "sling.test.mail.smtps.server.external",
+                "sling.test.mail.smtps.ssl.checkserveridentity",
                 "sling.test.mail.smtps.from",
                 "sling.test.mail.smtps.host",
                 "sling.test.mail.smtps.port",
@@ -145,6 +146,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
                 .put("host", "localhost")
                 .asOption(),
             factoryConfiguration("org.apache.sling.commons.messaging.mail.internal.SimpleMailService")
+                .put("mail.smtps.ssl.checkserveridentity", local ? "false" : System.getProperty("sling.test.mail.smtps.ssl.checkserveridentity"))
                 .put("mail.smtps.from", local ? "envelope-from@example.org" : System.getProperty("sling.test.mail.smtps.from"))
                 .put("mail.smtps.host", local ? "localhost" : System.getProperty("sling.test.mail.smtps.host"))
                 .put("mail.smtps.port", local ? port : Integer.getInteger("sling.test.mail.smtps.port"))

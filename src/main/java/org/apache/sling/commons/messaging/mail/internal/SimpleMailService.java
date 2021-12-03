@@ -80,6 +80,8 @@ public final class SimpleMailService implements MailService {
 
     private static final String MAIL_SMTPS_FROM = "mail.smtps.from";
 
+    private static final String MAIL_SMTPS_SSL_CHECKSERVERIDENTITY = "mail.smtps.ssl.checkserveridentity";
+
     private static final String MESSAGE_ID_HEADER = "Message-ID";
 
     @Reference(
@@ -159,6 +161,7 @@ public final class SimpleMailService implements MailService {
         threadPool = threadPoolManager.get(configuration.threadpool_name());
 
         final Properties properties = new Properties();
+        properties.setProperty(MAIL_SMTPS_SSL_CHECKSERVERIDENTITY, Boolean.toString(configuration.mail_smtps_ssl_checkserveridentity()));
         final String from = configuration.mail_smtps_from();
         if (Objects.nonNull(from) && !from.isBlank()) {
             properties.setProperty(MAIL_SMTPS_FROM, from.trim());
