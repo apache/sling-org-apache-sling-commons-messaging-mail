@@ -46,13 +46,14 @@ public class SimpleMailServiceTest {
 
     @Test
     public void testComponentLifecycle() throws Exception {
-        final MimeMessage message = mock(MimeMessage.class);
-        final ThreadPoolManager threadPoolManager = mock(ThreadPoolManager.class);
-        when(threadPoolManager.get("default")).thenReturn(new DefaultThreadPool());
-        final CryptoService cryptoService = mock(CryptoService.class);
         final Transport transport = mock(Transport.class);
         final Session session = mock(Session.class);
         when(session.getTransport("smtps")).thenReturn(transport);
+        final MimeMessage message = mock(MimeMessage.class);
+        when(message.getSession()).thenReturn(session);
+        final ThreadPoolManager threadPoolManager = mock(ThreadPoolManager.class);
+        when(threadPoolManager.get("default")).thenReturn(new DefaultThreadPool());
+        final CryptoService cryptoService = mock(CryptoService.class);
         final SimpleMailService service = new SimpleMailService();
         FieldUtils.writeDeclaredField(service, "threadPoolManager", threadPoolManager, true);
         FieldUtils.writeDeclaredField(service, "cryptoService", cryptoService, true);
@@ -62,7 +63,6 @@ public class SimpleMailServiceTest {
             final SimpleMailServiceConfiguration configuration = mock(SimpleMailServiceConfiguration.class);
             when(configuration.threadpool_name()).thenReturn("default");
             MethodUtils.invokeMethod(service, true, "activate", configuration);
-            FieldUtils.writeDeclaredField(service, "session", session, true);
             service.sendMessage(message);
         }
         { // modified

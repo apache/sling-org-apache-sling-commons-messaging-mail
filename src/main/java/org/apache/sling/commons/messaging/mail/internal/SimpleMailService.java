@@ -123,7 +123,7 @@ public final class SimpleMailService implements MailService {
 
     private SimpleMailServiceConfiguration configuration;
 
-    private Session session;
+    private Properties properties;
 
     private final Logger logger = LoggerFactory.getLogger(SimpleMailService.class);
 
@@ -153,7 +153,7 @@ public final class SimpleMailService implements MailService {
         this.configuration = null;
         threadPoolManager.release(threadPool);
         threadPool = null;
-        session = null;
+        properties = null;
     }
 
     private void configure(final SimpleMailServiceConfiguration configuration) {
@@ -166,12 +166,14 @@ public final class SimpleMailService implements MailService {
         if (Objects.nonNull(from) && !from.isBlank()) {
             properties.setProperty(MAIL_SMTPS_FROM, from.trim());
         }
-
-        session = Session.getInstance(properties);
+        this.properties = properties;
     }
 
     @Override
     public @NotNull MessageBuilder getMessageBuilder() {
+        final Properties properties = new Properties();
+        properties.putAll(this.properties);
+        final Session session = Session.getInstance(properties);
         return new SimpleMessageBuilder(session);
     }
 
@@ -191,7 +193,7 @@ public final class SimpleMailService implements MailService {
             final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
             final String password = cryptoService.decrypt(configuration.password());
-            try (Transport transport = session.getTransport(SMTPS_PROTOCOL)) {
+            try (Transport transport = message.getSession().getTransport(SMTPS_PROTOCOL)) {
                 final List<ConnectionListener> connectionListeners = this.connectionListeners;
                 connectionListeners.forEach(transport::addConnectionListener);
                 final List<TransportListener> transportListeners = this.transportListeners;
