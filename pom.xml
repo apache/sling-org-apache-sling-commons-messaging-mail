@@ -86,12 +86,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.2</version>
+        <version>3.2.0</version>
         <dependencies>
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>9.2</version>
+            <version>10.3.3</version>
           </dependency>
           <dependency>
             <groupId>de.bildschirmarbeiter</groupId>
@@ -116,7 +116,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.14.0</version>
+        <version>3.19.0</version>
         <configuration>
           <targetJdk>${sling.java.version}</targetJdk>
           <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>
@@ -133,7 +133,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.3.0</version>
+        <version>4.7.2.0</version>
         <configuration>
           <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
           <plugins>
