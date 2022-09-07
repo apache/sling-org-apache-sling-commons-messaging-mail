@@ -70,7 +70,16 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.propagateSystemProperties;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
@@ -202,7 +211,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
     @Test
     public void testMessageService() throws ExecutionException, InterruptedException {
         exception.expect(ExecutionException.class);
-        assertThat(messageService).isNotNull();
+        assertThat(messageService, notNullValue());
         final Properties properties = new Properties();
         final Session session = Session.getDefaultInstance(properties);
         final MimeMessage message = new MimeMessage(session);
@@ -212,7 +221,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
 
     @Test
     public void testMailService() {
-        assertThat(mailService).isNotNull();
+        assertThat(mailService, notNullValue());
     }
 
     @Test
@@ -235,16 +244,16 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getPlainContent()).isEqualTo(text);
+            assertThat(parser.getPlainContent(), is(text));
 
-            assertThat(parser.getAttachmentList()).isEmpty();
-            assertThat(parser.getContentIds()).isEmpty();
+            assertThat(parser.getAttachmentList(), empty());
+            assertThat(parser.getContentIds(), empty());
         }
     }
 
@@ -269,16 +278,16 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getPlainContent()).isEqualTo(text);
+            assertThat(parser.getPlainContent(), is(text));
 
-            assertThat(parser.getAttachmentList().get(0).getName()).isEqualTo("SupportApache-small.png");
-            assertThat(parser.getContentIds()).isEmpty();
+            assertThat(parser.getAttachmentList().get(0).getName(), is("SupportApache-small.png"));
+            assertThat(parser.getContentIds(), empty());
         }
     }
 
@@ -301,16 +310,16 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getHtmlContent()).isEqualTo(html);
+            assertThat(parser.getHtmlContent(), is(html));
 
-            assertThat(parser.getAttachmentList()).isEmpty();
-            assertThat(parser.getContentIds()).isEmpty();
+            assertThat(parser.getAttachmentList(), empty());
+            assertThat(parser.getContentIds(), empty());
         }
     }
 
@@ -335,16 +344,16 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getHtmlContent()).isEqualTo(html);
+            assertThat(parser.getHtmlContent(), is(html));
 
-            assertThat(parser.getAttachmentList().get(0).getName()).isEqualTo("SupportApache-small.png");
-            assertThat(parser.getContentIds()).isEmpty();
+            assertThat(parser.getAttachmentList().get(0).getName(), is("SupportApache-small.png"));
+            assertThat(parser.getContentIds(), empty());
         }
     }
 
@@ -371,15 +380,15 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getHtmlContent()).isEqualTo(html);
+            assertThat(parser.getHtmlContent(), is(html));
 
-            assertThat(parser.getContentIds()).contains("sling");
+            assertThat(parser.getContentIds(), hasItem("sling"));
         }
     }
 
@@ -408,35 +417,35 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeMessage received = messages[0];
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
 
-            assertThat(received.getMessageID()).endsWith("@localhost>");
-            assertThat(received.getSubject()).isEqualTo(subject);
-            assertThat(received.getFrom()[0]).isEqualTo(from);
-            assertThat(received.getRecipients(Message.RecipientType.TO)[0]).isEqualTo(to);
-            assertThat(received.getReplyTo()[0]).isEqualTo(replyTo);
+            assertThat(received.getMessageID(), endsWith("@localhost>"));
+            assertThat(received.getSubject(), is(subject));
+            assertThat(received.getFrom()[0], is(from));
+            assertThat(received.getRecipients(Message.RecipientType.TO)[0], is(to));
+            assertThat(received.getReplyTo()[0], is(replyTo));
 
-            assertThat(parser.getPlainContent()).isEqualTo(text);
-            assertThat(parser.getHtmlContent()).isEqualTo(html);
+            assertThat(parser.getPlainContent(), is(text));
+            assertThat(parser.getHtmlContent(), is(html));
 
-            assertThat(parser.getContentIds()).contains("sling");
+            assertThat(parser.getContentIds(), hasItem("sling"));
 
             final MimeMultipart content = (MimeMultipart) received.getContent();
-            assertThat(content.getContentType()).startsWith("multipart/mixed");
+            assertThat(content.getContentType(), startsWith("multipart/mixed"));
 
             final MimeBodyPart alternative = (MimeBodyPart) content.getBodyPart(0);
-            assertThat(alternative.getContentType()).startsWith("multipart/alternative");
+            assertThat(alternative.getContentType(), startsWith("multipart/alternative"));
 
             final MimeBodyPart related = (MimeBodyPart) ((MimeMultipart) alternative.getContent()).getBodyPart(0);
-            assertThat(related.getContentType()).startsWith("multipart/related");
+            assertThat(related.getContentType(), startsWith("multipart/related"));
 
             final MimeBodyPart inline = (MimeBodyPart) ((MimeMultipart) related.getContent()).getBodyPart(1);
-            assertThat(inline.getContentType()).isEqualTo("image/png");
-            assertThat(inline.getHeader("X-Inline")).hasLength(1);
-            assertThat(inline.getHeader("X-Inline")[0]).isEqualTo("Apache Sling");
+            assertThat(inline.getContentType(), is("image/png"));
+            assertThat(inline.getHeader("X-Inline"), arrayWithSize(1));
+            assertThat(inline.getHeader("X-Inline")[0], is("Apache Sling"));
 
             final MimeBodyPart attachment = (MimeBodyPart) content.getBodyPart(1);
-            assertThat(attachment.getContentType()).isEqualTo("image/png; name=SupportApache-small.png");
-            assertThat(attachment.getHeader("X-Attachment")).hasLength(1);
-            assertThat(attachment.getHeader("X-Attachment")[0]).isEqualTo("Apache Software Foundation");
+            assertThat(attachment.getContentType(), is("image/png; name=SupportApache-small.png"));
+            assertThat(attachment.getHeader("X-Attachment"), arrayWithSize(1));
+            assertThat(attachment.getHeader("X-Attachment")[0], is("Apache Software Foundation"));
         }
     }
 
@@ -464,17 +473,17 @@ public class SimpleMailServiceIT extends MailTestSupport {
         final CompletableFuture<Void> future = mailService.sendMessage(message);
         future.get();
 
-        assertThat(unusedCLSR.getReference().getUsingBundles()).isNull();
-        assertThat(unusedTLSR.getReference().getUsingBundles()).isNull();
+        assertThat(unusedCLSR.getReference().getUsingBundles(), nullValue());
+        assertThat(unusedTLSR.getReference().getUsingBundles(), nullValue());
 
-        assertThat(usedCLSR.getReference().getUsingBundles()).hasLength(1);
-        assertThat(usedTLSR.getReference().getUsingBundles()).hasLength(1);
+        assertThat(usedCLSR.getReference().getUsingBundles(), arrayWithSize(1));
+        assertThat(usedTLSR.getReference().getUsingBundles(), arrayWithSize(1));
 
-        assertThat(usedCLSR.getReference().getUsingBundles()[0].getSymbolicName()).isEqualTo("org.apache.sling.commons.messaging.mail");
-        assertThat(usedTLSR.getReference().getUsingBundles()[0].getSymbolicName()).isEqualTo("org.apache.sling.commons.messaging.mail");
+        assertThat(usedCLSR.getReference().getUsingBundles()[0].getSymbolicName(), is("org.apache.sling.commons.messaging.mail"));
+        assertThat(usedTLSR.getReference().getUsingBundles()[0].getSymbolicName(), is("org.apache.sling.commons.messaging.mail"));
 
-        assertThat(usedConnectionListener.opened.size()).isEqualTo(1);
-        assertThat(usedConnectionListener.closed.size()).isEqualTo(1);
+        assertThat(usedConnectionListener.opened, hasSize(1));
+        assertThat(usedConnectionListener.closed, hasSize(1));
     }
 
     private static class RecordingConnectionListener implements ConnectionListener {

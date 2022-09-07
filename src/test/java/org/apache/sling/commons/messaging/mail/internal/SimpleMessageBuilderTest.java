@@ -34,7 +34,10 @@ import org.apache.commons.mail.util.MimeMessageParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 public class SimpleMessageBuilderTest {
 
@@ -61,14 +64,14 @@ public class SimpleMessageBuilderTest {
         builder.header("c", "3");
         final MimeMessage message = builder.build();
         final String[] a = message.getHeader("a");
-        assertThat(a).hasLength(1);
-        assertThat(a[0]).isEqualTo("1");
+        assertThat(a, arrayWithSize(1));
+        assertThat(a[0], is("1"));
         final String[] b = message.getHeader("b");
-        assertThat(b).hasLength(1);
-        assertThat(b[0]).isEqualTo("2");
+        assertThat(b, arrayWithSize(1));
+        assertThat(b[0], is("2"));
         final String[] c = message.getHeader("c");
-        assertThat(c).hasLength(1);
-        assertThat(c[0]).isEqualTo("3");
+        assertThat(c, arrayWithSize(1));
+        assertThat(c[0], is("3"));
     }
 
     @Test
@@ -82,14 +85,14 @@ public class SimpleMessageBuilderTest {
         builder.headers(headers);
         final MimeMessage message = builder.build();
         final String[] a = message.getHeader("a");
-        assertThat(a).hasLength(1);
-        assertThat(a[0]).isEqualTo("1");
+        assertThat(a, arrayWithSize(1));
+        assertThat(a[0], is("1"));
         final String[] b = message.getHeader("b");
-        assertThat(b).hasLength(1);
-        assertThat(b[0]).isEqualTo("2");
+        assertThat(b, arrayWithSize(1));
+        assertThat(b[0], is("2"));
         final String[] c = message.getHeader("c");
-        assertThat(c).hasLength(1);
-        assertThat(c[0]).isEqualTo("3");
+        assertThat(c, arrayWithSize(1));
+        assertThat(c[0], is("3"));
     }
 
     @Test
@@ -101,7 +104,7 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress from = parser.getFrom();
-        assertThat(from).isEqualTo(address);
+        assertThat(from, is(address));
     }
 
     @Test
@@ -113,7 +116,7 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress from = parser.getFrom();
-        assertThat(from.getAddress()).isEqualTo(address);
+        assertThat(from.getAddress(), is(address));
     }
 
     @Test
@@ -126,8 +129,8 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress from = parser.getFrom();
-        assertThat(from.getAddress()).isEqualTo(address);
-        assertThat(from.getPersonal()).isEqualTo(name);
+        assertThat(from.getAddress(), is(address));
+        assertThat(from.getPersonal(), is(name));
     }
 
     // single to
@@ -141,11 +144,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress to = (InternetAddress) parser.getTo().get(0);
-        assertThat(to).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(1);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(to, is(address));
+        assertThat(parser.getTo(), hasSize(1));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -157,11 +160,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress to = (InternetAddress) parser.getTo().get(0);
-        assertThat(to.getAddress()).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(1);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(to.getAddress(), is(address));
+        assertThat(parser.getTo(), hasSize(1));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -174,12 +177,12 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress to = (InternetAddress) parser.getTo().get(0);
-        assertThat(to.getAddress()).isEqualTo(address);
-        assertThat(to.getPersonal()).isEqualTo(name);
-        assertThat(parser.getTo()).hasSize(1);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(to.getAddress(), is(address));
+        assertThat(to.getPersonal(), is(name));
+        assertThat(parser.getTo(), hasSize(1));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // multiple to
@@ -199,13 +202,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getTo().get(2);
-        assertThat(a).isEqualTo(addresses[0]);
-        assertThat(b).isEqualTo(addresses[1]);
-        assertThat(c).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(3);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a, is(addresses[0]));
+        assertThat(b, is(addresses[1]));
+        assertThat(c, is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(3));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -223,13 +226,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getTo().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(3);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(3));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -247,13 +250,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getTo().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(3);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(3));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // single cc
@@ -267,11 +270,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress cc = (InternetAddress) parser.getCc().get(0);
-        assertThat(cc).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(1);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(cc, is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(1));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -283,11 +286,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress cc = (InternetAddress) parser.getCc().get(0);
-        assertThat(cc.getAddress()).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(1);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(cc.getAddress(), is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(1));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -300,12 +303,12 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress cc = (InternetAddress) parser.getCc().get(0);
-        assertThat(cc.getAddress()).isEqualTo(address);
-        assertThat(cc.getPersonal()).isEqualTo(name);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(1);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(cc.getAddress(), is(address));
+        assertThat(cc.getPersonal(), is(name));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(1));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // multiple cc
@@ -325,13 +328,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getCc().get(0);
         final InternetAddress b = (InternetAddress) parser.getCc().get(1);
         final InternetAddress c = (InternetAddress) parser.getCc().get(2);
-        assertThat(a).isEqualTo(addresses[0]);
-        assertThat(b).isEqualTo(addresses[1]);
-        assertThat(c).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(3);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a, is(addresses[0]));
+        assertThat(b, is(addresses[1]));
+        assertThat(c, is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(3));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -349,13 +352,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getCc().get(0);
         final InternetAddress b = (InternetAddress) parser.getCc().get(1);
         final InternetAddress c = (InternetAddress) parser.getCc().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(3);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(3));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -373,13 +376,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getCc().get(0);
         final InternetAddress b = (InternetAddress) parser.getCc().get(1);
         final InternetAddress c = (InternetAddress) parser.getCc().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(3);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(3));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // single bcc
@@ -393,11 +396,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress bcc = (InternetAddress) parser.getBcc().get(0);
-        assertThat(bcc).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(1);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(bcc, is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(1));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -409,11 +412,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress bcc = (InternetAddress) parser.getBcc().get(0);
-        assertThat(bcc.getAddress()).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(1);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(bcc.getAddress(), is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(1));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -426,12 +429,12 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress bcc = (InternetAddress) parser.getBcc().get(0);
-        assertThat(bcc.getAddress()).isEqualTo(address);
-        assertThat(bcc.getPersonal()).isEqualTo(name);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(1);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(bcc.getAddress(), is(address));
+        assertThat(bcc.getPersonal(), is(name));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(1));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // multiple bcc
@@ -451,13 +454,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getBcc().get(0);
         final InternetAddress b = (InternetAddress) parser.getBcc().get(1);
         final InternetAddress c = (InternetAddress) parser.getBcc().get(2);
-        assertThat(a).isEqualTo(addresses[0]);
-        assertThat(b).isEqualTo(addresses[1]);
-        assertThat(c).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(3);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a, is(addresses[0]));
+        assertThat(b, is(addresses[1]));
+        assertThat(c, is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(3));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -475,13 +478,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getBcc().get(0);
         final InternetAddress b = (InternetAddress) parser.getBcc().get(1);
         final InternetAddress c = (InternetAddress) parser.getBcc().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(3);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(3));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     @Test
@@ -499,13 +502,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getBcc().get(0);
         final InternetAddress b = (InternetAddress) parser.getBcc().get(1);
         final InternetAddress c = (InternetAddress) parser.getBcc().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(3);
-        assertThat(parser.getReplyTo()).hasSize(0);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(3));
+        assertThat(parser.getReplyTo(), hasSize(0));
     }
 
     // single replyTo
@@ -519,11 +522,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress replyTo = (InternetAddress) parser.getReplyTo().get(0);
-        assertThat(replyTo).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(1);
+        assertThat(replyTo, is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(1));
     }
 
     @Test
@@ -535,11 +538,11 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress replyTo = (InternetAddress) parser.getReplyTo().get(0);
-        assertThat(replyTo.getAddress()).isEqualTo(address);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(1);
+        assertThat(replyTo.getAddress(), is(address));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(1));
     }
 
     @Test
@@ -552,12 +555,12 @@ public class SimpleMessageBuilderTest {
         final MimeMessage message = builder.build();
         final MimeMessageParser parser = new MimeMessageParser(message).parse();
         final InternetAddress replyTo = (InternetAddress) parser.getReplyTo().get(0);
-        assertThat(replyTo.getAddress()).isEqualTo(address);
-        assertThat(replyTo.getPersonal()).isEqualTo(name);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(1);
+        assertThat(replyTo.getAddress(), is(address));
+        assertThat(replyTo.getPersonal(), is(name));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(1));
     }
 
     // multiple replyTo
@@ -577,13 +580,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getReplyTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getReplyTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getReplyTo().get(2);
-        assertThat(a).isEqualTo(addresses[0]);
-        assertThat(b).isEqualTo(addresses[1]);
-        assertThat(c).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(3);
+        assertThat(a, is(addresses[0]));
+        assertThat(b, is(addresses[1]));
+        assertThat(c, is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(3));
     }
 
     @Test
@@ -601,13 +604,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getReplyTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getReplyTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getReplyTo().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(3);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(3));
     }
 
     @Test
@@ -625,13 +628,13 @@ public class SimpleMessageBuilderTest {
         final InternetAddress a = (InternetAddress) parser.getReplyTo().get(0);
         final InternetAddress b = (InternetAddress) parser.getReplyTo().get(1);
         final InternetAddress c = (InternetAddress) parser.getReplyTo().get(2);
-        assertThat(a.getAddress()).isEqualTo(addresses[0]);
-        assertThat(b.getAddress()).isEqualTo(addresses[1]);
-        assertThat(c.getAddress()).isEqualTo(addresses[2]);
-        assertThat(parser.getTo()).hasSize(0);
-        assertThat(parser.getCc()).hasSize(0);
-        assertThat(parser.getBcc()).hasSize(0);
-        assertThat(parser.getReplyTo()).hasSize(3);
+        assertThat(a.getAddress(), is(addresses[0]));
+        assertThat(b.getAddress(), is(addresses[1]));
+        assertThat(c.getAddress(), is(addresses[2]));
+        assertThat(parser.getTo(), hasSize(0));
+        assertThat(parser.getCc(), hasSize(0));
+        assertThat(parser.getBcc(), hasSize(0));
+        assertThat(parser.getReplyTo(), hasSize(3));
     }
 
 }

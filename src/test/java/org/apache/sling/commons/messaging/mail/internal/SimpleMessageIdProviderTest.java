@@ -19,10 +19,12 @@
 package org.apache.sling.commons.messaging.mail.internal;
 
 import jakarta.mail.internet.MimeMessage;
+
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -37,19 +39,19 @@ public class SimpleMessageIdProviderTest {
             final SimpleMessageIdProviderConfiguration configuration = mock(SimpleMessageIdProviderConfiguration.class);
             when(configuration.host()).thenReturn(host);
             MethodUtils.invokeMethod(provider, true, "activate", configuration);
-            assertThat(provider.getMessageId(message)).endsWith("@".concat(host));
+            assertThat(provider.getMessageId(message), endsWith("@".concat(host)));
         }
         { // modified
             final String host = "publish.cms.example.org";
             final SimpleMessageIdProviderConfiguration configuration = mock(SimpleMessageIdProviderConfiguration.class);
             when(configuration.host()).thenReturn(host);
             MethodUtils.invokeMethod(provider, true, "modified", configuration);
-            assertThat(provider.getMessageId(message)).endsWith("@".concat(host));
+            assertThat(provider.getMessageId(message), endsWith("@".concat(host)));
         }
         { // deactivate
             final String host = "publish.cms.example.org";
             MethodUtils.invokeMethod(provider, true, "deactivate");
-            assertThat(provider.getMessageId(message)).endsWith("@".concat(host));
+            assertThat(provider.getMessageId(message), endsWith("@".concat(host)));
         }
     }
 
