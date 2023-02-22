@@ -432,8 +432,8 @@ public final class SimpleMessageBuilder implements MessageBuilder {
 
             if (hasText() && hasHtml()) { // text and html
                 final MimeMultipart alternative = new MimeMultipart(MULTIPART_SUBTYPE_ALTERNATIVE);
-                handleHtmlAndInlines(alternative, html(), inlines());
                 addText(alternative, text());
+                handleHtmlAndInlines(alternative, html(), inlines());
                 final MimeBodyPart part = new MimeBodyPart();
                 part.setContent(alternative);
                 content.addBodyPart(part);

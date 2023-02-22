@@ -434,7 +434,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             final MimeBodyPart alternative = (MimeBodyPart) content.getBodyPart(0);
             assertThat(alternative.getContentType(), startsWith("multipart/alternative"));
 
-            final MimeBodyPart related = (MimeBodyPart) ((MimeMultipart) alternative.getContent()).getBodyPart(0);
+            final MimeBodyPart related = (MimeBodyPart) ((MimeMultipart) alternative.getContent()).getBodyPart(1);
             assertThat(related.getContentType(), startsWith("multipart/related"));
 
             final MimeBodyPart inline = (MimeBodyPart) ((MimeMultipart) related.getContent()).getBodyPart(1);
