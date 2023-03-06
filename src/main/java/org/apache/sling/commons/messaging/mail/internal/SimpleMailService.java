@@ -72,7 +72,7 @@ import org.slf4j.LoggerFactory;
     ocd = SimpleMailServiceConfiguration.class,
     factory = true
 )
-@SuppressWarnings({"java:S1117"})
+@SuppressWarnings({"java:S1117", "java:S3077"})
 public final class SimpleMailService implements MailService {
 
     private static final String SMTPS_PROTOCOL = "smtps";
