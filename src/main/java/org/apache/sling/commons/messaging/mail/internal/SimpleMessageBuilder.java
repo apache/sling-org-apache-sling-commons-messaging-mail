@@ -52,6 +52,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @see MimeMessage
  */
+@SuppressWarnings({"java:S1117"})
 public final class SimpleMessageBuilder implements MessageBuilder {
 
     private static final String CONTENT_TYPE_TEXT_HTML = "text/html; charset=utf-8";
