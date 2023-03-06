@@ -181,7 +181,7 @@ public final class SimpleMailService implements MailService {
     public @NotNull CompletableFuture<Void> sendMessage(@NotNull final MimeMessage message) {
         final var threadPool = this.threadPool;
         Objects.requireNonNull(threadPool, "Thread pool must not be null");
-        return CompletableFuture.runAsync(() -> send(message), runnable -> threadPool.submit(runnable));
+        return CompletableFuture.runAsync(() -> send(message), threadPool::submit);
     }
 
     private void send(@NotNull final MimeMessage message) {
