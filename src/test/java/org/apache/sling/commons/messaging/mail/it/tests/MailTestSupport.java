@@ -63,8 +63,6 @@ public abstract class MailTestSupport extends TestSupport {
             // Sling Commons Messaging Mail
             testBundle("bundle.filename"),
             mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.commons.messaging").versionAsInProject(),
-            mavenBundle().groupId("org.apache.servicemix.specs").artifactId("org.apache.servicemix.specs.activation-api-2.0.1").versionAsInProject(),
-            mavenBundle().groupId("com.sun.mail").artifactId("jakarta.mail").versionAsInProject(),
             scr(),
             slingCommonsCrypto(),
             slingCommonsThreads(),
