@@ -71,15 +71,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.CoreMatchers.endsWith;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.propagateSystemProperties;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
@@ -252,8 +249,8 @@ public class SimpleMailServiceIT extends MailTestSupport {
 
             assertThat(parser.getPlainContent(), is(text));
 
-            assertThat(parser.getAttachmentList(), empty());
-            assertThat(parser.getContentIds(), empty());
+            assertThat(parser.getAttachmentList().size(), is(0));
+            assertThat(parser.getContentIds().size(), is(0));
         }
     }
 
@@ -287,7 +284,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             assertThat(parser.getPlainContent(), is(text));
 
             assertThat(parser.getAttachmentList().get(0).getName(), is("SupportApache-small.png"));
-            assertThat(parser.getContentIds(), empty());
+            assertThat(parser.getContentIds().size(), is(0));
         }
     }
 
@@ -318,8 +315,8 @@ public class SimpleMailServiceIT extends MailTestSupport {
 
             assertThat(parser.getHtmlContent(), is(html));
 
-            assertThat(parser.getAttachmentList(), empty());
-            assertThat(parser.getContentIds(), empty());
+            assertThat(parser.getAttachmentList().size(), is(0));
+            assertThat(parser.getContentIds(), is(0));
         }
     }
 
@@ -353,7 +350,7 @@ public class SimpleMailServiceIT extends MailTestSupport {
             assertThat(parser.getHtmlContent(), is(html));
 
             assertThat(parser.getAttachmentList().get(0).getName(), is("SupportApache-small.png"));
-            assertThat(parser.getContentIds(), empty());
+            assertThat(parser.getContentIds().size(), is(0));
         }
     }
 
@@ -439,12 +436,12 @@ public class SimpleMailServiceIT extends MailTestSupport {
 
             final MimeBodyPart inline = (MimeBodyPart) ((MimeMultipart) related.getContent()).getBodyPart(1);
             assertThat(inline.getContentType(), is("image/png"));
-            assertThat(inline.getHeader("X-Inline"), arrayWithSize(1));
+            assertThat(inline.getHeader("X-Inline").length, is(1));
             assertThat(inline.getHeader("X-Inline")[0], is("Apache Sling"));
 
             final MimeBodyPart attachment = (MimeBodyPart) content.getBodyPart(1);
             assertThat(attachment.getContentType(), is("image/png; name=SupportApache-small.png"));
-            assertThat(attachment.getHeader("X-Attachment"), arrayWithSize(1));
+            assertThat(attachment.getHeader("X-Attachment").length, is(1));
             assertThat(attachment.getHeader("X-Attachment")[0], is("Apache Software Foundation"));
         }
     }
@@ -476,14 +473,14 @@ public class SimpleMailServiceIT extends MailTestSupport {
         assertThat(unusedCLSR.getReference().getUsingBundles(), nullValue());
         assertThat(unusedTLSR.getReference().getUsingBundles(), nullValue());
 
-        assertThat(usedCLSR.getReference().getUsingBundles(), arrayWithSize(1));
-        assertThat(usedTLSR.getReference().getUsingBundles(), arrayWithSize(1));
+        assertThat(usedCLSR.getReference().getUsingBundles().length, is(1));
+        assertThat(usedTLSR.getReference().getUsingBundles().length, is(1));
 
         assertThat(usedCLSR.getReference().getUsingBundles()[0].getSymbolicName(), is("org.apache.sling.commons.messaging.mail"));
         assertThat(usedTLSR.getReference().getUsingBundles()[0].getSymbolicName(), is("org.apache.sling.commons.messaging.mail"));
 
-        assertThat(usedConnectionListener.opened, hasSize(1));
-        assertThat(usedConnectionListener.closed, hasSize(1));
+        assertThat(usedConnectionListener.opened.size(), is(1));
+        assertThat(usedConnectionListener.closed.size(), is(1));
     }
 
     private static class RecordingConnectionListener implements ConnectionListener {
