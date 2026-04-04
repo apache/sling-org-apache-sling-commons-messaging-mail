@@ -39,6 +39,7 @@ import org.thymeleaf.context.IContext;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import static org.apache.sling.testing.paxexam.SlingOptions.greenmail;
+import static org.apache.sling.testing.paxexam.SlingOptions.paxLoggingApi;
 import static org.apache.sling.testing.paxexam.SlingOptions.scr;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsCrypto;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsThreads;
@@ -71,7 +72,8 @@ public abstract class MailTestSupport extends TestSupport {
             // testing
             mavenBundle().groupId("commons-io").artifactId("commons-io").versionAsInProject(),
             greenmail(),
-            thymeleaf()
+            thymeleaf(),
+            paxLoggingApi()
         );
     }
 
