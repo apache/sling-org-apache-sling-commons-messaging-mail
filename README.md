@@ -83,7 +83,7 @@ Create a multipart MIME message with an attachment (`filename`: `song.flac`) whe
 
 ## Integration Tests
 
-Integration tests require a running SMTP server. By default a [GreenMail](http://www.icegreen.com/greenmail/) server is started.
+Integration tests require a running SMTP server. By default a [GreenMail](https://greenmail-mail-test.github.io/greenmail/) server is started.
 
 An external SMTP server for validating messages with real mail clients can be used by setting required properties:
 
