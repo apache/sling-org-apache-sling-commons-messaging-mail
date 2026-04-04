@@ -45,7 +45,6 @@ import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsCrypto;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsThreads;
 import static org.apache.sling.testing.paxexam.SlingOptions.thymeleaf;
 import static org.ops4j.pax.exam.CoreOptions.composite;
-import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 
 public abstract class MailTestSupport extends TestSupport {
