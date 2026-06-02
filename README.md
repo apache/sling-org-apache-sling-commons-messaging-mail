@@ -6,17 +6,39 @@
 
 This module is part of the [Apache Sling](https://sling.apache.org) project.
 
-This module provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) 2.0 (package `jakarta.mail`) including a message builder and a service to send mails via SMTPS.
+It provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) 2.0 (package `jakarta.mail`), including:
 
-* Mail Service: sends MIME messages
-* Message Builder: builds plain text and HTML messages with attachments and inline images 
-* Message ID Provider: allows overwriting default message IDs by custom ones
+* **Mail Service**: sends MIME messages asynchronously (`CompletableFuture<Void>`)
+* **Message Builder**: builds plain text and HTML messages with attachments and inline images
+* **Message ID Provider**: allows replacing default message IDs with custom ones
 
+The project is built with Java 17 and validated in CI with Java 17 and Java 21.
+
+## Build and Test
+
+```bash
+# Build and run all checks (Checkstyle, PMD, SpotBugs) + unit tests
+mvn clean verify
+
+# Skip integration tests (faster local iteration)
+mvn clean verify -DskipITs
+
+# Run only unit tests
+mvn test
+
+# Run a single unit test class
+mvn test -Dtest=SimpleMailServiceTest
+
+# Run integration tests only
+mvn failsafe:integration-test failsafe:verify
+
+# Run a single integration test class
+mvn failsafe:integration-test -Dit.test=SimpleMailServiceIT
+```
 
 ## Examples
 
 ### Configuration
-
 
 #### MailService
 
@@ -51,53 +73,53 @@ Example factory configuration ([`SimpleMessageIdProviderConfiguration`](https://
 Create a multipart MIME message with an attachment (`filename`: `song.flac`) where the HTML part contains an inline image (`cid`: `ska`) and send it:
 
 ```
-    @Reference
-    MailService mailService;
+@Reference
+MailService mailService;
 
-    String subject = "Rudy, A Message to You";
-    String text = "Stop your messing around\nBetter think of your future\nTime you straighten right out\nCreating problems in town\n…";
-    String html = […];
-    byte[] attachment = […];
-    byte[] inline = […];
+String subject = "Rudy, A Message to You";
+String text = "Stop your messing around\nBetter think of your future\nTime you straighten right out\nCreating problems in town\n…";
+String html = […];
+byte[] attachment = […];
+byte[] inline = […];
 
-    MimeMessage message = mailService.getMessageBuilder()
-        .from("dandy.livingstone@kingston.jamaica.example.net", "Dandy Livingstone")
-        .to("the.specials@coventry.england.example.net", "The Specials")
-        .replyTo("rocksteady@jamaica.example.net");
-        .subject(subject)
-        .text(text)
-        .html(html)
-        .attachment(attachment, "audio/flac", "song.flac")
-        .inline(inline, "image/png", "ska")
-        .build();
+MimeMessage message = mailService.getMessageBuilder()
+    .from("dandy.livingstone@kingston.jamaica.example.net", "Dandy Livingstone")
+    .to("the.specials@coventry.england.example.net", "The Specials")
+    .replyTo("rocksteady@jamaica.example.net")
+    .subject(subject)
+    .text(text)
+    .html(html)
+    .attachment(attachment, "audio/flac", "song.flac")
+    .inline(inline, "image/png", "ska")
+    .build();
 
-    mailService.sendMessage(message);
+mailService.sendMessage(message);
 ```
 
 ## Dependencies
 
 * [Sling Commons Messaging](https://github.com/apache/sling-org-apache-sling-commons-messaging) (API)
-* [Sling Commons Crypto](https://github.com/apache/sling-org-apache-sling-commons-crypto) (for decrypting encrypted SMTP passwords)
+* [Sling Commons Crypto](https://github.com/apache/sling-org-apache-sling-commons-crypto) (decrypting encrypted SMTP passwords)
 * [Sling Commons Threads](https://github.com/apache/sling-org-apache-sling-commons-threads)
-* [Jakarta Mail 2.0](https://jakarta.ee/specifications/mail/2.0/) and [Jakarta Activation 2.0](https://jakarta.ee/specifications/activation/2.0/) (*OSGified*, e.g. `org.apache.servicemix.specs.activation-api-2.0.1`)
+* [Jakarta Mail 2.0](https://jakarta.ee/specifications/mail/2.0/) and [Jakarta Activation 2.0](https://jakarta.ee/specifications/activation/2.0/) (OSGi-compatible APIs used by the bundle)
 
 ## Integration Tests
 
-Integration tests require a running SMTP server. By default a [GreenMail](https://greenmail-mail-test.github.io/greenmail/) server is started.
+Integration tests use [GreenMail](https://greenmail-mail-test.github.io/greenmail/) by default.
 
-An external SMTP server for validating messages with real mail clients can be used by setting required properties:
+An external SMTP server (for end-to-end validation with real mail clients) can be used by setting these properties:
 
-    mvn clean install\
-      -Dsling.test.mail.smtps.server.external=true\
-      -Dsling.test.mail.smtps.ssl.checkserveridentity=true\
-      -Dsling.test.mail.smtps.from=envelope-from@example.org\
-      -Dsling.test.mail.smtps.host=localhost\
-      -Dsling.test.mail.smtps.port=465\
-      -Dsling.test.mail.smtps.username=username\
-      -Dsling.test.mail.smtps.password=password\
-      -Dsling.test.mail.from.address=from@example.org\
-      -Dsling.test.mail.from.name=From\ Sender\
-      -Dsling.test.mail.to.address=to@example.org\
-      -Dsling.test.mail.to.name=To\ Recipient\
-      -Dsling.test.mail.replyTo.address=replyto@example.org\
+    mvn failsafe:integration-test failsafe:verify \
+      -Dsling.test.mail.smtps.server.external=true \
+      -Dsling.test.mail.smtps.ssl.checkserveridentity=true \
+      -Dsling.test.mail.smtps.from=envelope-from@example.org \
+      -Dsling.test.mail.smtps.host=localhost \
+      -Dsling.test.mail.smtps.port=465 \
+      -Dsling.test.mail.smtps.username=username \
+      -Dsling.test.mail.smtps.password=password \
+      -Dsling.test.mail.from.address=from@example.org \
+      -Dsling.test.mail.from.name=From\ Sender \
+      -Dsling.test.mail.to.address=to@example.org \
+      -Dsling.test.mail.to.name=To\ Recipient \
+      -Dsling.test.mail.replyTo.address=replyto@example.org \
       -Dsling.test.mail.replyTo.name=Reply\ To
