@@ -112,3 +112,10 @@ src/
 - **`redirectTestOutputToFile=true`**: failsafe redirects integration test output to `target/failsafe-reports/`. Check there, not the console, when debugging IT failures.
 - **Checkstyle config is external**: the `configLocation` is `checks.xml` resolved from the Checkstyle dependency `de.bildschirmarbeiter:checkstyle:3`, not a file in this repo. Do not add a local `checks.xml`.
 - **`spotless` is disabled** (`<skip>true</skip>`) — do not rely on it for formatting.
+
+# Security
+
+<!-- sling-security-default:start -->
+The threat model for this project is https://github.com/apache/sling/blob/master/docs/threat-model.md .
+<!-- sling-security-default:end -->
+
