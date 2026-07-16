@@ -1,11 +1,11 @@
 # Project overview
 
-Apache Sling Commons Messaging Mail is an OSGi bundle that provides a `MailService` API for sending MIME messages over SMTPS. It exposes three public service interfaces (`MailService`, `MessageBuilder`, `MessageIdProvider`) and ships concrete implementations (`SimpleMailService`, `SimpleMessageBuilder`, `SimpleMessageIdProvider`) as OSGi Declarative Services components. The bundle depends on `sling.commons.messaging`, `sling.commons.crypto` (for password decryption), and `sling.commons.threads` for async dispatch. Sending is always asynchronous via `CompletableFuture`.
+Apache Sling Commons Messaging Mail is an OSGi bundle that provides a `MailService` API for sending MIME messages over SMTPS. It exposes three public service interfaces (`MailService`, `MessageBuilder`, `MessageIdProvider`) and ships concrete implementations (`SimpleMailService`, `SimpleMessageBuilder`, `SimpleMessageIdProvider`) as OSGi Declarative Services components. The bundle depends on `sling.commons.messaging`, `sling.commons.crypto` (for password decryption), and `sling.commons.threads` for async dispatch, and uses OSGi-compatible Jakarta Mail / Activation APIs. Sending is always asynchronous via `CompletableFuture`.
 
 # Core commands
 
 ```bash
-# Build and run all checks (Checkstyle, PMD, SpotBugs) + unit tests
+# Build and run all checks (Checkstyle, PMD, SpotBugs) + unit and integration tests
 mvn clean verify
 
 # Skip integration tests (faster local iteration)
@@ -77,11 +77,12 @@ src/
 
 # Development patterns & constraints
 
-- **Java 17**, OSGi R7. All source and target set via `sling.java.version=17`.
+- **Java 17**, OSGi R7. All source and target set via `sling.java.version=17`; CI also validates on Java 21.
 - **OSGi DS annotations only** — use `org.osgi.service.component.annotations.*`. Never use Felix SCR annotations.
 - `SimpleMailService` is a **factory component** (`@Designate(factory=true)`). Multiple instances can be registered with different SMTP servers.
 - All `@Reference` fields that can change at runtime are declared `volatile` with `DYNAMIC` policy and `GREEDY` option.
 - Password stored encrypted; always decrypt via `CryptoService.decrypt()` — never store plaintext passwords.
+- Jakarta APIs are consumed in OSGi-compatible form (`jakarta.mail-api` and ServiceMix Activation API).
 - Public API interfaces carry `@ProviderType` — do not add default methods without a version bump.
 - Nullability: annotate with `@NotNull`/`@Nullable` from `org.jetbrains.annotations`.
 - Every source file must have the Apache 2.0 license header. `apache-rat-plugin` enforces this at build time.
@@ -101,6 +102,7 @@ src/
 - Unit tests live in `src/test/java/.../mail/internal/` and are named `*Test.java`.
 - Integration tests live in `src/test/java/.../mail/it/tests/` and are named `*IT.java`. They run inside a real OSGi framework (Apache Felix) provisioned by Pax Exam.
 - GreenMail provides a local mock SMTP server for integration tests — no external mail server required.
+- Integration tests can also run against an external SMTP server via `-Dsling.test.mail.smtps.server.external=true` and related `sling.test.mail.*` system properties.
 - Test resources (templates, images, encrypted password) are in `src/test/resources/`.
 - Coverage is not enforced by a specific threshold; rely on code review.
 
@@ -118,4 +120,3 @@ src/
 <!-- sling-security-default:start -->
 The threat model for this project is https://github.com/apache/sling/blob/master/docs/threat-model.md .
 <!-- sling-security-default:end -->
-

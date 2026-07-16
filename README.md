@@ -6,7 +6,7 @@
 
 This module is part of the [Apache Sling](https://sling.apache.org) project.
 
-It provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) 2.0 (package `jakarta.mail`), including:
+It provides a simple layer on top of [Jakarta Mail](https://eclipse-ee4j.github.io/mail/) (package `jakarta.mail`) for asynchronous SMTP-over-SSL/TLS message delivery, including:
 
 * **Mail Service**: sends MIME messages asynchronously (`CompletableFuture<Void>`)
 * **Message Builder**: builds plain text and HTML messages with attachments and inline images
@@ -17,7 +17,7 @@ The project is built with Java 17 and validated in CI with Java 17 and Java 21.
 ## Build and Test
 
 ```bash
-# Build and run all checks (Checkstyle, PMD, SpotBugs) + unit tests
+# Build and run all checks (Checkstyle, PMD, SpotBugs) + unit and integration tests
 mvn clean verify
 
 # Skip integration tests (faster local iteration)
@@ -34,6 +34,15 @@ mvn failsafe:integration-test failsafe:verify
 
 # Run a single integration test class
 mvn failsafe:integration-test -Dit.test=SimpleMailServiceIT
+
+# Run Checkstyle only
+mvn checkstyle:check
+
+# Run PMD only
+mvn pmd:check
+
+# Run SpotBugs only
+mvn spotbugs:check
 ```
 
 ## Examples
@@ -46,12 +55,17 @@ Example factory configuration ([`SimpleMailServiceConfiguration`](https://github
 
 ```
 {
-  "mail.smtps.from": "envelope-from@example.org",
-  "mail.smtps.host": "smtp.example.org",
-  "mail.smtps.port": 465,
+  "names": ["default"],
+  "threadpool_name": "default",
+  "mail_smtps_ssl_checkserveridentity": true,
+  "mail_smtps_from": "envelope-from@example.org",
+  "mail_smtps_host": "smtp.example.org",
+  "mail_smtps_port": 465,
   "username": "SMTP-USERNAME-PLAIN",
   "password": "SMTP-PASSWORD-ENCRYPTED",
-  "messageIdProvider.target": "(names=hostname)"
+  "messageIdProvider_target": "(names=hostname)",
+  "connectionListeners_target": "(is=used)",
+  "transportListeners_target": "(is=used)"
 }
 ```
 
@@ -100,8 +114,8 @@ mailService.sendMessage(message);
 
 * [Sling Commons Messaging](https://github.com/apache/sling-org-apache-sling-commons-messaging) (API)
 * [Sling Commons Crypto](https://github.com/apache/sling-org-apache-sling-commons-crypto) (decrypting encrypted SMTP passwords)
-* [Sling Commons Threads](https://github.com/apache/sling-org-apache-sling-commons-threads)
-* [Jakarta Mail 2.0](https://jakarta.ee/specifications/mail/2.0/) and [Jakarta Activation 2.0](https://jakarta.ee/specifications/activation/2.0/) (OSGi-compatible APIs used by the bundle)
+* [Sling Commons Threads](https://github.com/apache/sling-org-apache-sling-commons-threads) (asynchronous dispatch)
+* [Jakarta Mail 2.0](https://jakarta.ee/specifications/mail/2.0/) and [ServiceMix Jakarta Activation API 2.0.1](https://mvnrepository.com/artifact/org.apache.servicemix.specs/org.apache.servicemix.specs.activation-api-2.0.1) (OSGi-compatible APIs used by the bundle)
 
 ## Integration Tests
 
